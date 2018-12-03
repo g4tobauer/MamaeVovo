@@ -14,10 +14,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Product product = new Product();
-        product.Id = 5L;
-        product.Description = "Descricao Teste";
-        ProductDataAccess.getInstance(getBaseContext()).Insert(product);
-        ProductDataAccess.getInstance(getBaseContext()).Get(product);
+        product.Id = 7L;
+        product.Description = "biriu";
+        product = ProductDataAccess.getInstance(getBaseContext()).Insert(product);
+        product.Description = "Cossovo";
+        ProductDataAccess.getInstance(getBaseContext()).Update(product);
+        ProductDataAccess.getInstance(getBaseContext()).Delete(new Product());
+        ProductDataAccess.getInstance(getBaseContext()).Get(new Product());
     }
 }
 

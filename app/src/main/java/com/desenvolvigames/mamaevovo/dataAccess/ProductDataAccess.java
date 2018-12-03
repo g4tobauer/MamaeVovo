@@ -10,11 +10,10 @@ import com.desenvolvigames.mamaevovo.dataAccess.management.DbHelper;
 import com.desenvolvigames.mamaevovo.entities.Product;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ProductDataAccess {
     private static ProductDataAccess mInstance;
-    private static Context mContext;
+    private DbHelper mDbHelper;
 
     private ProductDataAccess(){}
 
@@ -22,15 +21,18 @@ public class ProductDataAccess {
     {
         if(mInstance==null)
             mInstance = new ProductDataAccess();
-        mContext = context;
+        mInstance.CreateHelper(context);
         return mInstance;
+    }
+
+    private void CreateHelper(Context context)
+    {
+        mDbHelper = new DbHelper(context);
     }
 
     public ArrayList<Product> Get(Product product)
     {
-        DbHelper mDbHelper = new DbHelper(mContext);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
         StringBuilder sbSelection = new StringBuilder();
         ArrayList<String> arSelectionArgs = new ArrayList<>();
 
@@ -52,7 +54,7 @@ public class ProductDataAccess {
                 Contracts.ProductEntry.COLUMN_NAME_DESCRIPTION
         };
         String[] selectionArgs = arSelectionArgs.toArray(new String[0]);
-        Cursor cursor = db.query(Contracts.ProductEntry.TABLE_NAME, projection, sbSelection.toString(), selectionArgs,null,null, sortOrder);
+        Cursor cursor = db.query(Contracts.ProductEntry.TABLE_NAME, projection, sbSelection.length() > 0 ? sbSelection.toString() : null, selectionArgs,null,null, sortOrder);
 
         ArrayList<Product> mArrayList = new ArrayList();
         for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
@@ -69,30 +71,58 @@ public class ProductDataAccess {
 
     public Product Insert(Product product)
     {
-        DbHelper mDbHelper = new DbHelper(mContext);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(Contracts.ProductEntry.COLUMN_NAME_DESCRIPTION, product.Description);
         long newRowId = db.insert(Contracts.ProductEntry.TABLE_NAME, null, values);
         db.close();
 
-        Product prod = null;
+        Product result = null;
         if(!(newRowId < 0))
         {
-            prod = new Product();
-            prod.Id = newRowId;
-            prod = Get(prod).get(0);
+            result = new Product();
+            result.Id = newRowId;
+            result = Get(result).get(0);
         }
-        return prod;
+        return result;
     }
 
-    public void Update(Product product)
+    public Product Update(Product product)
     {
-        DbHelper mDbHelper = new DbHelper(mContext);
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Contracts.ProductEntry.COLUMN_NAME_DESCRIPTION, product.Description);
+        String selection = Contracts.ProductEntry._ID + " = ?";
+        String[] selectionArgs = { product.Id.toString() };
+        int count = db.update(
+                Contracts.ProductEntry.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs);
+        db.close();
+
+        Product result = null;
+        if(!(count == 0))
+        {
+            result = new Product();
+            result.Id = product.Id;
+            result = Get(result).get(0);
+        }
+        return result;
     }
 
-    public void Delete(Product product)
+    public boolean Delete(Product product)
     {
-        DbHelper mDbHelper = new DbHelper(mContext);
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        String[] selectionArgs = new String[0];
+        String selection = null;
+        if(!(product.Id == null))
+        {
+            selection = Contracts.ProductEntry._ID + " = ?";
+            selectionArgs[0] = product.Id.toString();
+        }
+        boolean result = db.delete(Contracts.ProductEntry.TABLE_NAME, selection, selectionArgs) > 0;
+        db.close();
+        return result;
     }
 }
