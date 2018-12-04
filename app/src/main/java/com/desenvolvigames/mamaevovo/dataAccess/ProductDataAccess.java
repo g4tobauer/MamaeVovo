@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.desenvolvigames.mamaevovo.dataAccess.management.Contracts;
 import com.desenvolvigames.mamaevovo.dataAccess.management.DbHelper;
 import com.desenvolvigames.mamaevovo.entities.Product;
+import com.desenvolvigames.mamaevovo.helpers.ProductUnitEnum;
 
 import java.util.ArrayList;
 
@@ -47,11 +48,25 @@ public class ProductDataAccess {
             sbSelection.append(Contracts.ProductEntry.COLUMN_NAME_DESCRIPTION + " = ?");
             arSelectionArgs.add(product.Description);
         }
+        if(!(product.Unit == null))
+        {
+            if(sbSelection.length() > 0) sbSelection.append(" AND ");
+            sbSelection.append(Contracts.ProductEntry.COLUMN_NAME_UNIT + " = ?");
+            arSelectionArgs.add(ProductUnitEnum.toInteger(product.Unit).toString());
+        }
+        if(!(product.Price == null))
+        {
+            if(sbSelection.length() > 0) sbSelection.append(" AND ");
+            sbSelection.append(Contracts.ProductEntry.COLUMN_NAME_PRICE + " = ?");
+            arSelectionArgs.add(product.Price.toString());
+        }
         String sortOrder = Contracts.ProductEntry.COLUMN_NAME_DESCRIPTION + " DESC";
 
         String[] projection = {
                 Contracts.ProductEntry._ID,
-                Contracts.ProductEntry.COLUMN_NAME_DESCRIPTION
+                Contracts.ProductEntry.COLUMN_NAME_DESCRIPTION,
+                Contracts.ProductEntry.COLUMN_NAME_UNIT,
+                Contracts.ProductEntry.COLUMN_NAME_PRICE
         };
         String[] selectionArgs = arSelectionArgs.toArray(new String[0]);
         Cursor cursor = db.query(Contracts.ProductEntry.TABLE_NAME, projection, sbSelection.length() > 0 ? sbSelection.toString() : null, selectionArgs,null,null, sortOrder);
@@ -62,6 +77,8 @@ public class ProductDataAccess {
             Product newProd = new Product();
             newProd.Id = cursor.getLong(cursor.getColumnIndexOrThrow(Contracts.ProductEntry._ID));
             newProd.Description = cursor.getString(cursor.getColumnIndexOrThrow(Contracts.ProductEntry.COLUMN_NAME_DESCRIPTION));
+            newProd.Unit = ProductUnitEnum.fromInteger(cursor.getInt(cursor.getColumnIndexOrThrow(Contracts.ProductEntry.COLUMN_NAME_UNIT)));
+            newProd.Price = cursor.getDouble(cursor.getColumnIndexOrThrow(Contracts.ProductEntry.COLUMN_NAME_PRICE));
             mArrayList.add(newProd);
         }
         db.close();
@@ -73,7 +90,14 @@ public class ProductDataAccess {
     {
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(Contracts.ProductEntry.COLUMN_NAME_DESCRIPTION, product.Description);
+
+        if(product.Description != null)
+            values.put(Contracts.ProductEntry.COLUMN_NAME_DESCRIPTION, product.Description);
+        if(product.Unit != null)
+            values.put(Contracts.ProductEntry.COLUMN_NAME_UNIT, ProductUnitEnum.toInteger(product.Unit));
+        if(product.Price != null)
+            values.put(Contracts.ProductEntry.COLUMN_NAME_PRICE, product.Price);
+
         long newRowId = db.insert(Contracts.ProductEntry.TABLE_NAME, null, values);
         db.close();
 
@@ -91,7 +115,14 @@ public class ProductDataAccess {
     {
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(Contracts.ProductEntry.COLUMN_NAME_DESCRIPTION, product.Description);
+
+        if(product.Description != null)
+            values.put(Contracts.ProductEntry.COLUMN_NAME_DESCRIPTION, product.Description);
+        if(product.Unit != null)
+            values.put(Contracts.ProductEntry.COLUMN_NAME_UNIT, ProductUnitEnum.toInteger(product.Unit));
+        if(product.Price != null)
+            values.put(Contracts.ProductEntry.COLUMN_NAME_PRICE, product.Price);
+
         String selection = Contracts.ProductEntry._ID + " = ?";
         String[] selectionArgs = { product.Id.toString() };
         int count = db.update(
