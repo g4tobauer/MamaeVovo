@@ -17,12 +17,12 @@ public class ProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
 
-        Product product = new Product();
-        product.Id = 1L;
-        product.Description = "teste";
-        product.Unit = ProductUnitEnum.KG;
-        product.Price = 20D;
-
-        product = ProductBussiness.getInstance(getBaseContext()).Update(product);
+//        Product product = new Product();
+//        product.Id = 1L;
+//        product.Description = "teste";
+//        product.Unit = ProductUnitEnum.KG;
+//        product.Price = 20D;
+//
+//        product = ProductBussiness.getInstance(getBaseContext()).Update(product);
     }
 }
