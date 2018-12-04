@@ -4,11 +4,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.desenvolvigames.mamaevovo.R;
-import com.desenvolvigames.mamaevovo.bussiness.ProductBussiness;
-import com.desenvolvigames.mamaevovo.entities.Product;
-import com.desenvolvigames.mamaevovo.helpers.ProductUnitEnum;
-
-import java.util.ArrayList;
 
 public class ProductActivity extends AppCompatActivity {
 

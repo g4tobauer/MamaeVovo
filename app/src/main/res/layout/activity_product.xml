@@ -10,46 +10,56 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:padding="10dp"
         android:layout_weight="1">
 
-        <EditText android:id="@+id/ed_description"
+        <TextView
+            android:id="@+id/textView"
+            style="@style/DefaultTextTitle"
+            android:text="@string/product_title" />
+
+        <EditText
+            android:id="@+id/ed_description"
             style="@style/DefaultTextEdit"
-            android:inputType="text"
-            android:hint="@string/product_description" />
+            android:hint="@string/product_description"
+            android:inputType="text" />
 
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:alpha=".9"
             android:orientation="horizontal">
-            <RadioButton android:id="@+id/rd_un"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_20"
-                android:text="@string/product_unit_un"/>
-            <RadioButton android:id="@+id/rd_kg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_20"
-                android:text="@string/product_unit_kg"/>
+
+            <RadioButton
+                android:id="@+id/rd_un"
+                style="@style/DefaultRadioButton"
+                android:text="@string/product_unit_un" />
+
+            <RadioButton
+                android:id="@+id/rd_kg"
+                style="@style/DefaultRadioButton"
+                android:text="@string/product_unit_kg" />
         </RadioGroup>
 
-        <EditText android:id="@+id/ed_price"
+        <EditText
+            android:id="@+id/ed_price"
             style="@style/DefaultTextEdit"
-            android:inputType="number"
-            android:hint="@string/product_price" />
+            android:hint="@string/product_price"
+            android:inputType="number" />
 
-        <EditText android:id="@+id/ed_obs"
+        <EditText
+            android:id="@+id/ed_obs"
             style="@style/DefaultTextEdit"
-            android:inputType="textMultiLine"
             android:layout_height="match_parent"
-            android:hint="@string/product_obs" />
+            android:hint="@string/product_obs"
+            android:inputType="textMultiLine" />
     </LinearLayout>
 
-    <Button android:id="@+id/bt_confirm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/text_size_20"
-        android:text="@string/confirm"
-        android:layout_weight="0"/>
+    <Button
+        android:id="@+id/bt_confirm"
+        style="@style/DefaultTextEdit"
+        android:layout_weight="0"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="@string/confirm" />
 
 </android.support.v7.widget.LinearLayoutCompat>
