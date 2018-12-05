@@ -14,41 +14,42 @@
         android:layout_weight="1">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tx_product_title"
             style="@style/DefaultTextTitle"
             android:text="@string/product_title" />
 
         <EditText
-            android:id="@+id/ed_description"
+            android:id="@+id/ed_product_description"
             style="@style/DefaultTextEdit"
             android:hint="@string/product_description"
             android:inputType="text" />
 
         <RadioGroup
+            android:id="@+id/rg_product_unit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:alpha=".9"
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/rd_un"
+                android:id="@+id/rd_product_un"
                 style="@style/DefaultRadioButton"
                 android:text="@string/product_unit_un" />
 
             <RadioButton
-                android:id="@+id/rd_kg"
+                android:id="@+id/rd_product_kg"
                 style="@style/DefaultRadioButton"
                 android:text="@string/product_unit_kg" />
         </RadioGroup>
 
         <EditText
-            android:id="@+id/ed_price"
+            android:id="@+id/ed_product_price"
             style="@style/DefaultTextEdit"
             android:hint="@string/product_price"
-            android:inputType="number" />
+            android:inputType="numberDecimal" />
 
         <EditText
-            android:id="@+id/ed_obs"
+            android:id="@+id/ed_product_obs"
             style="@style/DefaultTextEdit"
             android:layout_height="match_parent"
             android:hint="@string/product_obs"
@@ -56,10 +57,9 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/bt_confirm"
-        style="@style/DefaultTextEdit"
+        android:id="@+id/bt_product_confirm"
+        style="@style/DefaultButton"
         android:layout_weight="0"
-        android:backgroundTint="@color/colorPrimary"
         android:text="@string/confirm" />
 
 </android.support.v7.widget.LinearLayoutCompat>
