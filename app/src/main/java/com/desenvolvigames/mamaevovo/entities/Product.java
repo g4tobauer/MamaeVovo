@@ -8,4 +8,5 @@ public class Product
     public String Description;
     public ProductUnitEnum Unit;
     public Double Price;
+    public String Obs;
 }

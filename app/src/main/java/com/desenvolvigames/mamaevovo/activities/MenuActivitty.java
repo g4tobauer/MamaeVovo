@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.Button;
 
 import com.desenvolvigames.mamaevovo.R;
+import com.desenvolvigames.mamaevovo.bussiness.ProductBussiness;
+import com.desenvolvigames.mamaevovo.entities.Product;
+
+import java.util.ArrayList;
 
 public class MenuActivitty extends AppCompatActivity implements View.OnClickListener{
 
@@ -26,9 +30,17 @@ public class MenuActivitty extends AppCompatActivity implements View.OnClickList
         switch (v.getId())
         {
             case R.id.bt_menu_cadastre:
-                Intent myIntent = new Intent(MenuActivitty.this, ProductActivity.class);
-                myIntent.putExtra("key", ""); //Optional parameters
-                MenuActivitty.this.startActivity(myIntent);
+                ArrayList<Product> lstProduct = ProductBussiness.getInstance(getBaseContext()).Get(new Product());
+                if(lstProduct.isEmpty()) {
+                    Intent myIntent = new Intent(MenuActivitty.this, ProductActivity.class);
+                    myIntent.putExtra("key", "INSERT"); //Optional parameters
+                    MenuActivitty.this.startActivity(myIntent);
+                }else
+                {
+                    Intent myIntent = new Intent(MenuActivitty.this, ProductListActivity.class);
+                    myIntent.putExtra("key", lstProduct); //Optional parameters
+                    MenuActivitty.this.startActivity(myIntent);
+                }
                 break;
         }
     }

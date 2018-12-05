@@ -6,6 +6,8 @@
     <string name="product_unit_kg">K/g</string>
     <string name="product_price">Preço</string>
     <string name="product_obs">Observação</string>
+    <string name="product_insert_ok">Produto inserido!</string>
+    <string name="product_insert_fail">Produto não inserido!</string>
 
     <string name="menu_product_cadastre">Produtos</string>
 

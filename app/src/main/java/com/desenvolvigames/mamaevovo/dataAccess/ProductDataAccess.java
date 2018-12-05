@@ -60,13 +60,20 @@ public class ProductDataAccess {
             sbSelection.append(Contracts.ProductEntry.COLUMN_NAME_PRICE + " = ?");
             arSelectionArgs.add(product.Price.toString());
         }
+        if(!(product.Obs == null))
+        {
+            if(sbSelection.length() > 0) sbSelection.append(" AND ");
+            sbSelection.append(Contracts.ProductEntry.COLUMN_NAME_OBS + " = ?");
+            arSelectionArgs.add(product.Obs);
+        }
         String sortOrder = Contracts.ProductEntry.COLUMN_NAME_DESCRIPTION + " DESC";
 
         String[] projection = {
                 Contracts.ProductEntry._ID,
                 Contracts.ProductEntry.COLUMN_NAME_DESCRIPTION,
                 Contracts.ProductEntry.COLUMN_NAME_UNIT,
-                Contracts.ProductEntry.COLUMN_NAME_PRICE
+                Contracts.ProductEntry.COLUMN_NAME_PRICE,
+                Contracts.ProductEntry.COLUMN_NAME_OBS
         };
         String[] selectionArgs = arSelectionArgs.toArray(new String[0]);
         Cursor cursor = db.query(Contracts.ProductEntry.TABLE_NAME, projection, sbSelection.length() > 0 ? sbSelection.toString() : null, selectionArgs,null,null, sortOrder);
@@ -79,6 +86,7 @@ public class ProductDataAccess {
             newProd.Description = cursor.getString(cursor.getColumnIndexOrThrow(Contracts.ProductEntry.COLUMN_NAME_DESCRIPTION));
             newProd.Unit = ProductUnitEnum.fromInteger(cursor.getInt(cursor.getColumnIndexOrThrow(Contracts.ProductEntry.COLUMN_NAME_UNIT)));
             newProd.Price = cursor.getDouble(cursor.getColumnIndexOrThrow(Contracts.ProductEntry.COLUMN_NAME_PRICE));
+            newProd.Obs = cursor.getString(cursor.getColumnIndexOrThrow(Contracts.ProductEntry.COLUMN_NAME_OBS));
             mArrayList.add(newProd);
         }
         db.close();
@@ -97,6 +105,8 @@ public class ProductDataAccess {
             values.put(Contracts.ProductEntry.COLUMN_NAME_UNIT, ProductUnitEnum.toInteger(product.Unit));
         if(product.Price != null)
             values.put(Contracts.ProductEntry.COLUMN_NAME_PRICE, product.Price);
+        if(product.Obs != null)
+            values.put(Contracts.ProductEntry.COLUMN_NAME_OBS, product.Obs);
 
         long newRowId = db.insert(Contracts.ProductEntry.TABLE_NAME, null, values);
         db.close();
@@ -122,6 +132,8 @@ public class ProductDataAccess {
             values.put(Contracts.ProductEntry.COLUMN_NAME_UNIT, ProductUnitEnum.toInteger(product.Unit));
         if(product.Price != null)
             values.put(Contracts.ProductEntry.COLUMN_NAME_PRICE, product.Price);
+        if(product.Obs != null)
+            values.put(Contracts.ProductEntry.COLUMN_NAME_OBS, product.Obs);
 
         String selection = Contracts.ProductEntry._ID + " = ?";
         String[] selectionArgs = { product.Id.toString() };

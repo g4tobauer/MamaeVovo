@@ -8,8 +8,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.desenvolvigames.mamaevovo.R;
+import com.desenvolvigames.mamaevovo.bussiness.ProductBussiness;
 import com.desenvolvigames.mamaevovo.entities.Product;
 import com.desenvolvigames.mamaevovo.helpers.ProductUnitEnum;
 
@@ -35,14 +37,6 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
         rdgProductUnit = findViewById(R.id.rg_product_unit);
 
         btnProductConfirm.setOnClickListener(ProductActivity.this);
-
-//        Product product = new Product();
-//        product.Id = 1L;
-//        product.Description = "teste";
-//        product.Unit = ProductUnitEnum.KG;
-//        product.Price = 20D;
-//
-//        product = ProductBussiness.getInstance(getBaseContext()).Update(product);
     }
     @Override
     public void onClick(View v)
@@ -50,9 +44,13 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
         switch (v.getId())
         {
             case R.id.bt_product_confirm:
+                String strTemp;
                 Product product = new Product();
-                product.Description = edtProductDescription.getText().toString();
-                product.Price = Double.parseDouble(edtProductPrice.getText().toString());
+                strTemp = edtProductDescription.getText().toString();
+                product.Description = strTemp.isEmpty() ? null : strTemp;
+
+                strTemp = edtProductPrice.getText().toString();
+                product.Price = strTemp.isEmpty() ? null : Double.parseDouble(edtProductPrice.getText().toString());
                 int selectedId = rdgProductUnit.getCheckedRadioButtonId();
                 switch (selectedId)
                 {
@@ -62,8 +60,23 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
                     case R.id.rd_product_kg:
                         product.Unit = ProductUnitEnum.KG;
                         break;
+                        default:
+                            product.Unit = null;
+                            break;
                 }
+                strTemp = edtProductObs.getText().toString();
+                product.Obs = strTemp.isEmpty() ? null : strTemp;
+                if(Save(product))
+                    Toast.makeText(getBaseContext(),R.string.product_insert_ok,Toast.LENGTH_SHORT);
+                else
+                    Toast.makeText(getBaseContext(),R.string.product_insert_fail,Toast.LENGTH_SHORT);
                 break;
         }
+    }
+
+    private boolean Save(Product product)
+    {
+        Product newProduct = ProductBussiness.getInstance(getBaseContext()).Insert(product);
+        return product.Description.equals(newProduct.Description);
     }
 }

@@ -19,7 +19,8 @@ public class DbHelper extends SQLiteOpenHelper {
                 Contracts.ProductEntry._ID + INTEGER_TYPE + " PRIMARY KEY" + COMMA_SEP +
                 Contracts.ProductEntry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE + COMMA_SEP +
                 Contracts.ProductEntry.COLUMN_NAME_UNIT + INTEGER_TYPE + COMMA_SEP +
-                Contracts.ProductEntry.COLUMN_NAME_PRICE + REAL_TYPE +
+                Contracts.ProductEntry.COLUMN_NAME_PRICE + REAL_TYPE +COMMA_SEP +
+                Contracts.ProductEntry.COLUMN_NAME_OBS + TEXT_TYPE +
             " )";
     private static final String SQL_DELETE_PRODUCTS = "DROP TABLE IF EXISTS " + Contracts.ProductEntry.TABLE_NAME;
 
