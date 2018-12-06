@@ -38,7 +38,7 @@ public class MenuActivitty extends AppCompatActivity implements View.OnClickList
                 }else
                 {
                     Intent myIntent = new Intent(MenuActivitty.this, ProductListActivity.class);
-                    myIntent.putExtra("key", lstProduct); //Optional parameters
+                    myIntent.putParcelableArrayListExtra("key", lstProduct);
                     MenuActivitty.this.startActivity(myIntent);
                 }
                 break;

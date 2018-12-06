@@ -15,8 +15,8 @@ public class ProductListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_list);
-        Intent intent = getIntent();
-        ArrayList<Product> lstProduct = (ArrayList<Product>) intent.getSerializableExtra("key"); //if it's a string you stored.
+        Intent myIntent = getIntent();
+        ArrayList<Product> lstProduct = myIntent.getParcelableArrayListExtra("key");
 
         for(Product product : lstProduct)
         {
