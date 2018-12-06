@@ -18,7 +18,11 @@
         </activity>
         <activity android:name=".activities.ProductActivity" />
         <activity android:name=".activities.MenuActivitty" />
-        <activity android:name=".activities.ProductListActivity"></activity>
+        <activity android:name=".activities.ProductListActivity" />
+        <activity
+            android:name=".activities.TesteActivity"
+            android:label="@string/title_activity_teste"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

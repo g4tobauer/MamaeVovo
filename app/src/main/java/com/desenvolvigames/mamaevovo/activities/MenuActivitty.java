@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class MenuActivitty extends AppCompatActivity implements View.OnClickListener{
 
-    Button btnMenuCadastre;
+    private Button btnMenuCadastre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

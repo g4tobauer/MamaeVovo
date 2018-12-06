@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -17,11 +16,11 @@ import com.desenvolvigames.mamaevovo.helpers.ProductUnitEnum;
 
 public class ProductActivity extends AppCompatActivity implements View.OnClickListener{
 
-    Button btnProductConfirm;
-    EditText edtProductDescription;
-    EditText edtProductPrice;
-    EditText edtProductObs;
-    RadioGroup rdgProductUnit;
+    private Button btnProductConfirm;
+    private EditText edtProductDescription;
+    private EditText edtProductPrice;
+    private EditText edtProductObs;
+    private RadioGroup rdgProductUnit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -10,6 +10,7 @@ import com.desenvolvigames.mamaevovo.R;
 import com.desenvolvigames.mamaevovo.entities.Product;
 
 import java.util.List;
+import java.util.Locale;
 
 public class ProductListAdapter extends BaseAdapter {
     private final List<Product> lstProduct;
@@ -43,7 +44,7 @@ public class ProductListAdapter extends BaseAdapter {
         TextView txtProductListAdapterPrice = view.findViewById(R.id.tx_product_list_adapter_price);
         TextView txtProductListAdapterUnit = view.findViewById(R.id.tx_product_list_adapter_unit);
         txtProductListAdapterDescription.setText(product.Description);
-        txtProductListAdapterPrice.setText(product.Price.toString());
+        txtProductListAdapterPrice.setText(String.format(Locale.getDefault(), "%.2f", product.Price).concat(" R$"));
         txtProductListAdapterUnit.setText(product.Unit.name());
         return view;
     }
