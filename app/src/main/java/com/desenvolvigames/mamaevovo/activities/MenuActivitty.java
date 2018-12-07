@@ -33,7 +33,7 @@ public class MenuActivitty extends AppCompatActivity implements View.OnClickList
                 ArrayList<Product> lstProduct = ProductBussiness.getInstance(getBaseContext()).Get(new Product());
                 if(lstProduct.isEmpty()) {
                     Intent myIntent = new Intent(MenuActivitty.this, ProductActivity.class);
-                    myIntent.putExtra("key", "INSERT"); //Optional parameters
+                    myIntent.putExtra("key", ProductActivity.INSERT); //Optional parameters
                     MenuActivitty.this.startActivity(myIntent);
                 }else
                 {
@@ -43,5 +43,6 @@ public class MenuActivitty extends AppCompatActivity implements View.OnClickList
                 }
                 break;
         }
+        finish();
     }
 }
