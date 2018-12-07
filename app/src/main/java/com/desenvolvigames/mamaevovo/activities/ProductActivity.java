@@ -43,6 +43,21 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
         edtProductObs = findViewById(R.id.ed_product_obs);
         rdgProductUnit = findViewById(R.id.rg_product_unit);
         btnProductConfirm.setOnClickListener(ProductActivity.this);
+        InitFields(intent);
+    }
+
+    private void InitFields(Intent intent)
+    {
+        switch (action)
+        {
+            case INSERT:
+                break;
+            case UPDATE:
+                Product prod  = intent.getParcelableExtra("obj"); //if it's a string you stored.
+                break;
+            case DELETE:
+                break;
+        }
     }
     @Override
     public void onClick(View v){
