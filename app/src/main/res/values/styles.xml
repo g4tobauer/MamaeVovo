@@ -36,7 +36,9 @@
         <item name="android:textSize">@dimen/text_size_40</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@drawable/edit_text_selector</item>
         <item name="android:alpha">.9</item>
+        disabled_color
     </style>
 
     <style name="DefaultButton" parent="@style/Widget.AppCompat.Button">

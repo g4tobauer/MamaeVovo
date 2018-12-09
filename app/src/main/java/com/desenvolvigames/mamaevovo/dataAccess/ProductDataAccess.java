@@ -121,7 +121,7 @@ public class ProductDataAccess {
         return result;
     }
 
-    public Product Update(Product product)
+    public boolean Update(Product product)
     {
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -143,21 +143,13 @@ public class ProductDataAccess {
                 selection,
                 selectionArgs);
         db.close();
-
-        Product result = null;
-        if(!(count == 0))
-        {
-            result = new Product();
-            result.Id = product.Id;
-            result = Get(result).get(0);
-        }
-        return result;
+        return (!(count == 0));
     }
 
     public boolean Delete(Product product)
     {
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        String[] selectionArgs = new String[0];
+        String[] selectionArgs = new String[1];
         String selection = null;
         if(!(product.Id == null))
         {

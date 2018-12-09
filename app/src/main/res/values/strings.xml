@@ -8,9 +8,16 @@
     <string name="product_obs">Observação</string>
     <string name="product_insert_ok">Produto inserido!</string>
     <string name="product_insert_fail">Produto não inserido!</string>
+    <string name="product_update_ok">Produto alterado!</string>
+    <string name="product_update_fail">Produto não alterado!</string>
+    <string name="product_delete_ok">Produto deletado!</string>
+    <string name="product_delete_fail">Produto não deletado!</string>
 
     <string name="menu_product_cadastre">Produtos</string>
 
     <string name="confirm">Confirmar</string>
+    <string name="insert">Inserir</string>
+    <string name="update">Alterar</string>
+    <string name="delete">Deletar</string>
     <string name="title_activity_teste">teste</string>
 </resources>

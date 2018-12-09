@@ -32,12 +32,12 @@
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/rd_product_un"
+                android:id="@+id/rb_product_un"
                 style="@style/DefaultRadioButton"
                 android:text="@string/product_unit_un" />
 
             <RadioButton
-                android:id="@+id/rd_product_kg"
+                android:id="@+id/rb_product_kg"
                 style="@style/DefaultRadioButton"
                 android:text="@string/product_unit_kg" />
         </RadioGroup>

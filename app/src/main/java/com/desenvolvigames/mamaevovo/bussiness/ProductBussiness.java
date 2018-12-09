@@ -36,7 +36,7 @@ public class ProductBussiness {
         return ProductDataAccess.getInstance(mContext).Insert(product);
     }
 
-    public Product Update(Product product)
+    public boolean Update(Product product)
     {
         return ProductDataAccess.getInstance(mContext).Update(product);
     }
