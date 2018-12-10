@@ -1,5 +1,6 @@
 package com.desenvolvigames.mamaevovo.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -25,8 +26,8 @@ public class SalesOrderActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_salesorder);
         Intent myIntent = getIntent();
         ArrayList<Product> lstProductTemp = myIntent.getParcelableArrayListExtra("key");
-        if(lstProductTemp != null)
-            lstProduct.addAll(lstProductTemp);
+        if(lstProductTemp != null) lstProduct.addAll(lstProductTemp);
+        else lstProduct = new ArrayList<>();
         ltvProductList = findViewById(R.id.lv_item_list);
         ltvProductList.setAdapter(new ProductListAdapter(lstProduct, SalesOrderActivity.this));
         ltvProductList.setOnItemClickListener(SalesOrderActivity.this);
@@ -35,12 +36,25 @@ public class SalesOrderActivity extends AppCompatActivity implements View.OnClic
         salesOrderItemAdd = findViewById(R.id.fab_salesorder_item_add);
         salesOrderItemAdd.setOnClickListener(SalesOrderActivity.this);
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                String result = data.getStringExtra("result");
+                result = null;
+//                Product product = data.getParcelableExtra("result");
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+        }
+    }//onActivityResult
 
     @Override
     public void onClick(View v){
         Intent myIntent = new Intent(SalesOrderActivity.this, SalesOrderItemActivity.class);
-        SalesOrderActivity.this.startActivity(myIntent);
-        finish();
+        SalesOrderActivity.this.startActivityForResult(myIntent, 1);
     }
 
     @Override
@@ -49,7 +63,6 @@ public class SalesOrderActivity extends AppCompatActivity implements View.OnClic
 //        myIntent.putExtra("key", ProductActivity.UPDATE); //Optional parameters
 //        myIntent.putExtra("obj", (Product)parent.getItemAtPosition(position)); //Optional parameters
 //        SalesOrderActivity.this.startActivity(myIntent);
-        finish();
     }
 
     @Override
@@ -58,7 +71,6 @@ public class SalesOrderActivity extends AppCompatActivity implements View.OnClic
 //        myIntent.putExtra("key", ProductActivity.DELETE); //Optional parameters
 //        myIntent.putExtra("obj", (Product)arg0.getItemAtPosition(pos)); //Optional parameters
 //        SalesOrderActivity.this.startActivity(myIntent);
-//        finish();
         return true;
     }
 
