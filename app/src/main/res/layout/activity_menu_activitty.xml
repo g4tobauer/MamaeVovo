@@ -12,6 +12,11 @@ tools:context=".activities.MenuActivitty">
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/bt_menu_salesorder"
+            style="@style/DefaultButton"
+            android:text="@string/menu_product_salesorder"/>
+
+        <Button
             android:id="@+id/bt_menu_cadastre"
             style="@style/DefaultButton"
             android:text="@string/menu_product_cadastre"/>

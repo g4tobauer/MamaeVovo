@@ -15,13 +15,16 @@ import java.util.ArrayList;
 public class MenuActivitty extends AppCompatActivity implements View.OnClickListener{
 
     private Button btnMenuCadastre;
+    private Button btnSalesOrder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_activitty);
         btnMenuCadastre = findViewById(R.id.bt_menu_cadastre);
+        btnSalesOrder = findViewById(R.id.bt_menu_salesorder);
         btnMenuCadastre.setOnClickListener(MenuActivitty.this);
+        btnSalesOrder.setOnClickListener(MenuActivitty.this);
     }
 
     @Override
@@ -41,6 +44,10 @@ public class MenuActivitty extends AppCompatActivity implements View.OnClickList
                     myIntent.putParcelableArrayListExtra("key", lstProduct);
                     MenuActivitty.this.startActivity(myIntent);
                 }
+                break;
+            case R.id.bt_menu_salesorder:
+                Intent myIntent = new Intent(MenuActivitty.this, SalesOrderActivity.class);
+                MenuActivitty.this.startActivity(myIntent);
                 break;
         }
         finish();

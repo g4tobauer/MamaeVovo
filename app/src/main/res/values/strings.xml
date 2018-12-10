@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">Mamae Vovo</string>
+    <string name="confirm">Confirmar</string>
+    <string name="insert">Inserir</string>
+    <string name="update">Alterar</string>
+    <string name="delete">Deletar</string>
+
+    <string name="menu_product_salesorder">Pedidos</string>
+    <string name="menu_product_cadastre">Produtos</string>
+
     <string name="product_title">Cadastro de Produtos</string>
     <string name="product_description">Descrição</string>
     <string name="product_unit_un">Unidade</string>
@@ -13,11 +21,8 @@
     <string name="product_delete_ok">Produto deletado!</string>
     <string name="product_delete_fail">Produto não deletado!</string>
 
-    <string name="menu_product_cadastre">Produtos</string>
+    <string name="salesorder_title">Pedido</string>
 
-    <string name="confirm">Confirmar</string>
-    <string name="insert">Inserir</string>
-    <string name="update">Alterar</string>
-    <string name="delete">Deletar</string>
+    <string name="salesorderitem_title">Item</string>
     <string name="title_activity_teste">teste</string>
 </resources>

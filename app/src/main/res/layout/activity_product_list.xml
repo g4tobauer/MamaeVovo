@@ -18,7 +18,7 @@ tools:context=".activities.ProductListActivity">
 </LinearLayout>
 
 <android.support.design.widget.FloatingActionButton
-    android:id="@+id/fab_add"
+    android:id="@+id/fab_product_add"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom|end"

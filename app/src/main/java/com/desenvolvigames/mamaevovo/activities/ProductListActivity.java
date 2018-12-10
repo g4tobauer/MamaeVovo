@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class ProductListActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener{
     private ListView ltvProductList;
-    private FloatingActionButton fabAdd;
+    private FloatingActionButton fabProductAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +29,8 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
         ltvProductList.setAdapter(new ProductListAdapter(lstProduct, ProductListActivity.this));
         ltvProductList.setOnItemClickListener(ProductListActivity.this);
         ltvProductList.setOnItemLongClickListener(ProductListActivity.this);
-        fabAdd = findViewById(R.id.fab_add);
-        fabAdd.setOnClickListener(ProductListActivity.this);
+        fabProductAdd = findViewById(R.id.fab_product_add);
+        fabProductAdd.setOnClickListener(ProductListActivity.this);
     }
 
     @Override

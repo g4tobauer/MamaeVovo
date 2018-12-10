@@ -16,13 +16,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.ProductActivity" />
         <activity android:name=".activities.MenuActivitty" />
+        <activity android:name=".activities.ProductActivity" />
         <activity android:name=".activities.ProductListActivity" />
+        <activity android:name=".activities.SalesOrderActivity" />
         <activity
             android:name=".activities.TesteActivity"
             android:label="@string/title_activity_teste"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.SalesOrderItemActivity"></activity>
     </application>
 
 </manifest>

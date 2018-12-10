@@ -38,7 +38,7 @@ public class ProductListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = act.getLayoutInflater().inflate(R.layout.activity_product_list_adapter, parent, false);
+        View view = act.getLayoutInflater().inflate(R.layout.adapter_product_list, parent, false);
         Product product = lstProduct.get(position);
         TextView txtProductListAdapterDescription = view.findViewById(R.id.tx_product_list_adapter_description);
         TextView txtProductListAdapterPrice = view.findViewById(R.id.tx_product_list_adapter_price);
