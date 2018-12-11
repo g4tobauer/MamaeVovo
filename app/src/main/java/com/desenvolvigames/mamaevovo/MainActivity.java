@@ -1,10 +1,9 @@
 package com.desenvolvigames.mamaevovo;
 import android.os.Bundle;
 
-import com.desenvolvigames.mamaevovo.activities.MenuActivitty;
-import com.desenvolvigames.mamaevovo.activities.ProductActivity;
+import com.desenvolvigames.mamaevovo.activities.PrincipalActivitty;
 
-public class MainActivity extends MenuActivitty {
+public class MainActivity extends PrincipalActivitty {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

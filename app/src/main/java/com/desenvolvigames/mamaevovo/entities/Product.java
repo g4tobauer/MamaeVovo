@@ -22,7 +22,8 @@ public class Product implements Parcelable
             Id = in.readLong();
         }
         Description = in.readString();
-        Unit = ProductUnitEnum.valueOf(in.readString());
+        String unit = in.readString();
+        Unit = unit == null ? null : ProductUnitEnum.valueOf(unit);
         if (in.readByte() == 0) {
             Price = null;
         } else {
@@ -57,7 +58,7 @@ public class Product implements Parcelable
             dest.writeLong(Id);
         }
         dest.writeString(Description);
-        dest.writeString(Unit.name());
+        dest.writeString(Unit == null ? null : Unit.name());
         if (Price == null) {
             dest.writeByte((byte) 0);
         } else {
@@ -65,5 +66,10 @@ public class Product implements Parcelable
             dest.writeDouble(Price);
         }
         dest.writeString(Obs);
+    }
+
+    @Override
+    public String toString() {
+        return Description;
     }
 }

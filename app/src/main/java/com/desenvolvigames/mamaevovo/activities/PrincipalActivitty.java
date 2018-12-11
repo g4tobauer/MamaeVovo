@@ -12,19 +12,19 @@ import com.desenvolvigames.mamaevovo.entities.Product;
 
 import java.util.ArrayList;
 
-public class MenuActivitty extends AppCompatActivity implements View.OnClickListener{
+public class PrincipalActivitty extends AppCompatActivity implements View.OnClickListener{
 
-    private Button btnMenuCadastre;
+    private Button btnPrincipalCadastre;
     private Button btnSalesOrder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu_activitty);
-        btnMenuCadastre = findViewById(R.id.bt_menu_cadastre);
-        btnSalesOrder = findViewById(R.id.bt_menu_salesorder);
-        btnMenuCadastre.setOnClickListener(MenuActivitty.this);
-        btnSalesOrder.setOnClickListener(MenuActivitty.this);
+        setContentView(R.layout.activity_principal_activitty);
+        btnPrincipalCadastre = findViewById(R.id.bt_principal_cadastre);
+        btnSalesOrder = findViewById(R.id.bt_principal_salesorder);
+        btnPrincipalCadastre.setOnClickListener(PrincipalActivitty.this);
+        btnSalesOrder.setOnClickListener(PrincipalActivitty.this);
     }
 
     @Override
@@ -32,22 +32,22 @@ public class MenuActivitty extends AppCompatActivity implements View.OnClickList
     {
         switch (v.getId())
         {
-            case R.id.bt_menu_cadastre:
+            case R.id.bt_principal_cadastre:
                 ArrayList<Product> lstProduct = ProductBussiness.getInstance(getBaseContext()).Get(new Product());
                 if(lstProduct.isEmpty()) {
-                    Intent myIntent = new Intent(MenuActivitty.this, ProductActivity.class);
+                    Intent myIntent = new Intent(PrincipalActivitty.this, ProductActivity.class);
                     myIntent.putExtra("key", ProductActivity.INSERT); //Optional parameters
-                    MenuActivitty.this.startActivity(myIntent);
+                    PrincipalActivitty.this.startActivity(myIntent);
                 }else
                 {
-                    Intent myIntent = new Intent(MenuActivitty.this, ProductListActivity.class);
+                    Intent myIntent = new Intent(PrincipalActivitty.this, ProductListActivity.class);
                     myIntent.putParcelableArrayListExtra("key", lstProduct);
-                    MenuActivitty.this.startActivity(myIntent);
+                    PrincipalActivitty.this.startActivity(myIntent);
                 }
                 break;
-            case R.id.bt_menu_salesorder:
-                Intent myIntent = new Intent(MenuActivitty.this, SalesOrderActivity.class);
-                MenuActivitty.this.startActivity(myIntent);
+            case R.id.bt_principal_salesorder:
+                Intent myIntent = new Intent(PrincipalActivitty.this, SalesOrderActivity.class);
+                PrincipalActivitty.this.startActivity(myIntent);
                 break;
         }
         finish();

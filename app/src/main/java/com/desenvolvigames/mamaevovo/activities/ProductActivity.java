@@ -107,7 +107,7 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
             ProductActivity.this.startActivity(myIntent);
         }else
         {
-            Intent myIntent = new Intent(ProductActivity.this, MenuActivitty.class);
+            Intent myIntent = new Intent(ProductActivity.this, PrincipalActivitty.class);
             ProductActivity.this.startActivity(myIntent);
         }
         finish();
@@ -125,7 +125,7 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
 
         }else
         {
-            Intent myIntent = new Intent(ProductActivity.this, MenuActivitty.class);
+            Intent myIntent = new Intent(ProductActivity.this, PrincipalActivitty.class);
             ProductActivity.this.startActivity(myIntent);
             finish();
         }

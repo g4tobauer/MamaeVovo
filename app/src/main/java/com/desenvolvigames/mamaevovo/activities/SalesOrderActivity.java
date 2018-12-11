@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import com.desenvolvigames.mamaevovo.R;
 import com.desenvolvigames.mamaevovo.entities.Product;
+import com.desenvolvigames.mamaevovo.entities.SalesOrderItem;
 import com.desenvolvigames.mamaevovo.helpers.ProductListAdapter;
 
 import java.util.ArrayList;
@@ -41,10 +42,9 @@ public class SalesOrderActivity extends AppCompatActivity implements View.OnClic
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){
-                String result = data.getStringExtra("result");
-                result = null;
-//                Product product = data.getParcelableExtra("result");
-            }
+                SalesOrderItem salesOrderItem = data.getParcelableExtra("result");
+                salesOrderItem = null;
+            }else
             if (resultCode == Activity.RESULT_CANCELED) {
                 //Write your code if there's no result
             }
@@ -76,7 +76,7 @@ public class SalesOrderActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onBackPressed() {
-        Intent myIntent = new Intent(SalesOrderActivity.this, MenuActivitty.class);
+        Intent myIntent = new Intent(SalesOrderActivity.this, PrincipalActivitty.class);
         SalesOrderActivity.this.startActivity(myIntent);
         finish();
     }

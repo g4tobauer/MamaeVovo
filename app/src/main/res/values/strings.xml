@@ -5,8 +5,8 @@
     <string name="update">Alterar</string>
     <string name="delete">Deletar</string>
 
-    <string name="menu_product_salesorder">Pedidos</string>
-    <string name="menu_product_cadastre">Produtos</string>
+    <string name="principal_product_salesorder">Pedidos</string>
+    <string name="principal_product_cadastre">Produtos</string>
 
     <string name="product_title">Cadastro de Produtos</string>
     <string name="product_description">Descrição</string>

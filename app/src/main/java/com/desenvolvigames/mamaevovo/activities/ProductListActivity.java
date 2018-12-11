@@ -61,7 +61,7 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onBackPressed() {
-        Intent myIntent = new Intent(ProductListActivity.this, MenuActivitty.class);
+        Intent myIntent = new Intent(ProductListActivity.this, PrincipalActivitty.class);
         ProductListActivity.this.startActivity(myIntent);
         finish();
     }

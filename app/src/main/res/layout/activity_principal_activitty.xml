@@ -4,7 +4,7 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="vertical"
-tools:context=".activities.MenuActivitty">
+tools:context=".activities.PrincipalActivitty">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,14 +12,14 @@ tools:context=".activities.MenuActivitty">
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/bt_menu_salesorder"
+            android:id="@+id/bt_principal_salesorder"
             style="@style/DefaultButton"
-            android:text="@string/menu_product_salesorder"/>
+            android:text="@string/principal_product_salesorder"/>
 
         <Button
-            android:id="@+id/bt_menu_cadastre"
+            android:id="@+id/bt_principal_cadastre"
             style="@style/DefaultButton"
-            android:text="@string/menu_product_cadastre"/>
+            android:text="@string/principal_product_cadastre"/>
     </LinearLayout>
 
 </android.support.v7.widget.LinearLayoutCompat>
