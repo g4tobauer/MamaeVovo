@@ -15,6 +15,7 @@ import com.desenvolvigames.mamaevovo.bussiness.ProductBussiness;
 import com.desenvolvigames.mamaevovo.entities.Menu;
 import com.desenvolvigames.mamaevovo.entities.Product;
 import com.desenvolvigames.mamaevovo.entities.SalesOrderItem;
+import com.desenvolvigames.mamaevovo.helpers.MenuListAdapter;
 import com.desenvolvigames.mamaevovo.helpers.ProductSpinnerAdapter;
 
 import java.util.ArrayList;
@@ -30,20 +31,16 @@ public class SalesOrderItemActivity extends AppCompatActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_salesorderitem);
+
         spnSalesOrderitemProducts = findViewById(R.id.spn_salesorderitem_products);
         lstMenuCheck = findViewById(R.id.lst_menu_check);
         btnsalesOrderitemConfirm = findViewById(R.id.btn_salesorderitem_confirm);
-//        spnSalesOrderitemProducts.setAdapter(new ProductSpinnerAdapter(getBaseContext(), ProductBussiness.getInstance(getBaseContext()).Get(new Product())));
 
-
-
-        ProductSpinnerAdapter adapter =
-                new ProductSpinnerAdapter(getBaseContext(), ProductBussiness.getInstance(getBaseContext()).Get(new Product()));
+        ProductSpinnerAdapter adapter = new ProductSpinnerAdapter(getBaseContext(), ProductBussiness.getInstance(getBaseContext()).Get(new Product()));
         adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
-
         spnSalesOrderitemProducts.setAdapter(adapter);
 
-//        lstMenuCheck.setAdapter(new ProductSpinnerAdapter(getBaseContext(), ProductBussiness.getInstance(getBaseContext()).Get(new Product())));
+//        lstMenuCheck.setAdapter(new MenuListAdapter(getBaseContext(), ProductBussiness.getInstance(getBaseContext()).Get(new Product())));
         btnsalesOrderitemConfirm.setOnClickListener(SalesOrderItemActivity.this);
         teste();
     }
@@ -68,6 +65,7 @@ public class SalesOrderItemActivity extends AppCompatActivity implements View.On
         menu.Description = "Frango";
         menu.Active = false;
         lstMenu.add(menu);
+        lstMenuCheck.setAdapter(new MenuListAdapter(getBaseContext(), lstMenu));
     }
 
     @Override
