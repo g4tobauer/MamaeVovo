@@ -6,7 +6,7 @@ import android.os.Parcelable;
 public class Menu implements Parcelable {
     public Long Id;
     public String Description;
-    public boolean Active;
+    public Boolean Active;
 
     public Menu(){}
 

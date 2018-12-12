@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 
 public class MenuListAdapter extends ArrayAdapter<Menu> {
-
     public MenuListAdapter(Context context, ArrayList<Menu> objects) {
         super(context, R.layout.adapter_salesorderitem_spinner, objects);
     }
@@ -33,7 +32,6 @@ public class MenuListAdapter extends ArrayAdapter<Menu> {
             convertView = View.inflate(getContext(),R.layout.adapter_menu_list,null);
         CheckBox MenuCheck = convertView.findViewById(R.id.chk_menu_adapter_check);
         MenuCheck.setText(getItem(position).Description);
-//        MenuCheck.setChecked(getItem(position).Active);
         return convertView;
     }
 }

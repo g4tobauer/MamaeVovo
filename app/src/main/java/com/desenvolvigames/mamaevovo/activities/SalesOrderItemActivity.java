@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.desenvolvigames.mamaevovo.R;
+import com.desenvolvigames.mamaevovo.bussiness.MenuBussiness;
 import com.desenvolvigames.mamaevovo.bussiness.ProductBussiness;
 import com.desenvolvigames.mamaevovo.entities.Menu;
 import com.desenvolvigames.mamaevovo.entities.Product;
@@ -36,42 +37,19 @@ public class SalesOrderItemActivity extends AppCompatActivity implements View.On
         lstMenuCheck = findViewById(R.id.lst_menu_check);
         btnsalesOrderitemConfirm = findViewById(R.id.btn_salesorderitem_confirm);
 
-        ProductSpinnerAdapter adapter = new ProductSpinnerAdapter(getBaseContext(), ProductBussiness.getInstance(getBaseContext()).Get(new Product()));
+        ArrayAdapter adapter = new ProductSpinnerAdapter(getBaseContext(), ProductBussiness.getInstance(getBaseContext()).Get(new Product()));
         adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
         spnSalesOrderitemProducts.setAdapter(adapter);
-
-//        lstMenuCheck.setAdapter(new MenuListAdapter(getBaseContext(), ProductBussiness.getInstance(getBaseContext()).Get(new Product())));
+        adapter = new MenuListAdapter(getBaseContext(), MenuBussiness.getInstance(getBaseContext()).Get(new Menu()));
+        lstMenuCheck.setAdapter(adapter);
         btnsalesOrderitemConfirm.setOnClickListener(SalesOrderItemActivity.this);
-        teste();
-    }
-
-    private void teste()
-    {
-        ArrayList<Menu> lstMenu = new ArrayList<>();
-        Menu menu = new Menu();
-        menu.Id = 1L;
-        menu.Description = "Arroz";
-        menu.Active = false;
-        lstMenu.add(menu);
-
-        menu = new Menu();
-        menu.Id = 2L;
-        menu.Description = "Feijão";
-        menu.Active = false;
-        lstMenu.add(menu);
-
-        menu = new Menu();
-        menu.Id = 3L;
-        menu.Description = "Frango";
-        menu.Active = false;
-        lstMenu.add(menu);
-        lstMenuCheck.setAdapter(new MenuListAdapter(getBaseContext(), lstMenu));
     }
 
     @Override
     public void onClick(View v) {
         Intent intent = getIntent();
         SalesOrderItem teste = new SalesOrderItem();
+
         intent.putExtra("result", teste);
 //        intent.putExtra("result","teste");
         setResult(Activity.RESULT_OK, intent);
