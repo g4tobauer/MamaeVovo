@@ -40,4 +40,9 @@ public class SalesOrderItem implements Parcelable {
         dest.writeParcelable(Product, flags);
         dest.writeTypedList(MenuItem);
     }
+
+    @Override
+    public String toString() {
+        return Product.Description;
+    }
 }

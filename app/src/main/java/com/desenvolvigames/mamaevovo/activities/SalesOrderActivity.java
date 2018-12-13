@@ -1,49 +1,58 @@
 package com.desenvolvigames.mamaevovo.activities;
 
 import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.desenvolvigames.mamaevovo.R;
-import com.desenvolvigames.mamaevovo.entities.Product;
 import com.desenvolvigames.mamaevovo.entities.SalesOrderItem;
-import com.desenvolvigames.mamaevovo.helpers.ProductListAdapter;
 
 import java.util.ArrayList;
 
-public class SalesOrderActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener{
+public class SalesOrderActivity extends ListActivity implements View.OnClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener{
     private FloatingActionButton salesOrderItemAdd;
-    private ListView ltvProductList;
-    private ArrayList<Product> lstProduct;
+    private ListView ltvSalesOrderItem;
+    private ArrayList<SalesOrderItem> lstSalesOrderItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_salesorder);
         Intent myIntent = getIntent();
-        ArrayList<Product> lstProductTemp = myIntent.getParcelableArrayListExtra("key");
-        if(lstProductTemp != null) lstProduct.addAll(lstProductTemp);
-        else lstProduct = new ArrayList<>();
-        ltvProductList = findViewById(R.id.lv_item_list);
-        ltvProductList.setAdapter(new ProductListAdapter(lstProduct, SalesOrderActivity.this));
-        ltvProductList.setOnItemClickListener(SalesOrderActivity.this);
-        ltvProductList.setOnItemLongClickListener(SalesOrderActivity.this);
+//        ArrayList<Product> lstProductTemp = myIntent.getParcelableArrayListExtra("key");
+//        if(lstProductTemp != null) lstProduct.addAll(lstProductTemp);
+//        else lstProduct = new ArrayList<>();
+        lstSalesOrderItem = new ArrayList<>();
+        ltvSalesOrderItem = getListView();
+        ltvSalesOrderItem.setChoiceMode(ltvSalesOrderItem.CHOICE_MODE_SINGLE);
+        ltvSalesOrderItem.setTextFilterEnabled(true);
+        setListAdapter(new ArrayAdapter<>(SalesOrderActivity.this, android.R.layout.simple_list_item_1, lstSalesOrderItem));
 
         salesOrderItemAdd = findViewById(R.id.fab_salesorder_item_add);
         salesOrderItemAdd.setOnClickListener(SalesOrderActivity.this);
     }
+
+    @Override
+    public void onListItemClick(ListView parent, View v,int position,long id){
+        SalesOrderItem salesOrderItem = (SalesOrderItem)parent.getItemAtPosition(position);
+        Toast.makeText(SalesOrderActivity.this, salesOrderItem.toString() , Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){
                 SalesOrderItem salesOrderItem = data.getParcelableExtra("result");
-                salesOrderItem = null;
+                lstSalesOrderItem.add(salesOrderItem);
+                ((ArrayAdapter)ltvSalesOrderItem.getAdapter()).notifyDataSetChanged();
             }else
             if (resultCode == Activity.RESULT_CANCELED) {
                 //Write your code if there's no result
