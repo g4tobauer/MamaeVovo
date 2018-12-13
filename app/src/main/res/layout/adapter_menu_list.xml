@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/text_size_10">
-    <CheckBox
+
+    <CheckedTextView
         android:id="@+id/chk_menu_adapter_check"
         style="@style/DefaultCheckAdapter"
         android:padding="@dimen/text_size_20"

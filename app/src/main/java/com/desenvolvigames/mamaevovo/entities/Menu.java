@@ -48,4 +48,9 @@ public class Menu implements Parcelable {
         dest.writeString(Description);
         dest.writeByte((byte) (Active ? 1 : 0));
     }
+
+    @Override
+    public String toString() {
+        return Description;
+    }
 }
