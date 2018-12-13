@@ -59,6 +59,7 @@ public class SalesOrderItemActivity extends ListActivity implements View.OnClick
                 menu.Active, Toast.LENGTH_SHORT).show();
     }
 
+
     @Override
     public void onClick(View v) {
         Intent intent = getIntent();
