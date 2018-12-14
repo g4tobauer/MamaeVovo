@@ -65,7 +65,7 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
                 product.Description = strTemp.isEmpty() ? null : strTemp;
 
                 strTemp = edtProductPrice.getText().toString();
-                product.Price = strTemp.isEmpty() ? null : Double.parseDouble(edtProductPrice.getText().toString());
+                product.Price = strTemp.isEmpty() ? null : Double.parseDouble(edtProductPrice.getText().toString().replace(",", "."));
                 int selectedId = rdgProductUnit.getCheckedRadioButtonId();
                 switch (selectedId)
                 {

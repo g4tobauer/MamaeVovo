@@ -33,11 +33,13 @@ public class ProductBussiness {
 
     public Product Insert(Product product)
     {
+        product.Price = Double.parseDouble(product.Price.toString().replace(",", "."));
         return ProductDataAccess.getInstance(mContext).Insert(product);
     }
 
     public boolean Update(Product product)
     {
+        product.Price = Double.parseDouble(product.Price.toString().replace(",", "."));
         return ProductDataAccess.getInstance(mContext).Update(product);
     }
 

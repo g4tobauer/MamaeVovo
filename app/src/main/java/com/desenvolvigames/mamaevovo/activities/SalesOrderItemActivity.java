@@ -64,25 +64,32 @@ public class SalesOrderItemActivity extends ListActivity implements View.OnClick
                     if(salesOrderItem.Product.Id == product.Id)
                     {
                         spnSalesOrderitemProducts.setSelection(adapter.getPosition(product));
+                        break;
                     }
                 }
 
-                for(Menu menu : salesOrderItem.MenuItem)
+                for (int i = 0; i < lstMenuCheck.getAdapter().getCount(); i++)
                 {
-                    if(menu.Active)
+                    boolean active = false;
+                    Menu menuTemp = (Menu)lstMenuCheck.getAdapter().getItem(i);
+                    for(Menu menu : salesOrderItem.MenuItem)
                     {
-                        for (int i = 0; i < lstMenuCheck.getAdapter().getCount(); i++) {
-                            Menu menuInner = (Menu)lstMenuCheck.getAdapter().getItem(i);
-                            if(menu.Id == menuInner.Id)
-                            {
-                                menuInner.Active = true;
-                                lstMenuCheck.setItemChecked(i, menuInner.Active);
-                                break;
-                            }
+                        if(menu.Id == menuTemp.Id)
+                        {
+                            active = menu.Active;
+                            break;
                         }
                     }
+                    lstMenuCheck.setItemChecked(i, active);
                 }
                 break;
+                default:
+                    for (int i = 0; i < lstMenuCheck.getAdapter().getCount(); i++)
+                    {
+                        Menu menu = (Menu)lstMenuCheck.getAdapter().getItem(i);
+                        lstMenuCheck.setItemChecked(i, menu.Active);
+                    }
+                    break;
         }
     }
 
