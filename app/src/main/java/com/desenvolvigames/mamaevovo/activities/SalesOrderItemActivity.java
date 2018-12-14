@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -28,6 +27,7 @@ public class SalesOrderItemActivity extends ListActivity implements View.OnClick
     private Button btnsalesOrderitemConfirm;
     private ListView lstMenuCheck;
     private ArrayList<Menu> lstMenu;
+    private SalesOrderItem salesOrderItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class SalesOrderItemActivity extends ListActivity implements View.OnClick
         switch(intent.getAction())
         {
             case "UPDATE":
-                SalesOrderItem salesOrderItem = intent.getParcelableExtra("key");
+                salesOrderItem = intent.getParcelableExtra("key");
                 ProductSpinnerAdapter adapter = ((ProductSpinnerAdapter)spnSalesOrderitemProducts.getAdapter());
                 for(Product product : adapter.getProducts())
                 {
@@ -70,17 +70,18 @@ public class SalesOrderItemActivity extends ListActivity implements View.OnClick
 
                 for (int i = 0; i < lstMenuCheck.getAdapter().getCount(); i++)
                 {
-                    boolean active = false;
                     Menu menuTemp = (Menu)lstMenuCheck.getAdapter().getItem(i);
+                    menuTemp.Active = false;
+                    lstMenuCheck.setItemChecked(i, menuTemp.Active);
                     for(Menu menu : salesOrderItem.MenuItem)
                     {
                         if(menu.Id == menuTemp.Id)
                         {
-                            active = menu.Active;
+                            menuTemp.Active = menu.Active;
+                            lstMenuCheck.setItemChecked(i, menuTemp.Active);
                             break;
                         }
                     }
-                    lstMenuCheck.setItemChecked(i, active);
                 }
                 break;
                 default:
@@ -91,6 +92,7 @@ public class SalesOrderItemActivity extends ListActivity implements View.OnClick
                     }
                     break;
         }
+        ((ArrayAdapter) lstMenuCheck.getAdapter()).notifyDataSetChanged();
     }
 
 
@@ -107,8 +109,10 @@ public class SalesOrderItemActivity extends ListActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         Intent intent = getIntent();
-        SalesOrderItem salesOrderItem = new SalesOrderItem();
+        if(salesOrderItem == null)
+            salesOrderItem = new SalesOrderItem();
         ArrayList<Menu> lstMenuTemp = new ArrayList<>();
+        salesOrderItem.MenuItem.clear();
         for(Menu menu : lstMenu)
         {
             if(menu.Active)

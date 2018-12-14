@@ -64,17 +64,21 @@ public class SalesOrderActivity extends ListActivity implements View.OnClickList
             {
                 case INSERT:
                     salesOrderItem = data.getParcelableExtra("result");
+                    if(lstSalesOrderItem.size() == 0) salesOrderItem.Id = 0L;
+                    else
+                    {
+                        Long id = lstSalesOrderItem.get(lstSalesOrderItem.size()-1).Id;
+                        salesOrderItem.Id = id+1;
+                    }
                     lstSalesOrderItem.add(salesOrderItem);
-                    ((ArrayAdapter) ltvSalesOrderItem.getAdapter()).notifyDataSetChanged();
                     break;
                 case UPDATE:
-                    lstSalesOrderItem.remove(salesOrderItemOldTemp);
                     salesOrderItem = data.getParcelableExtra("result");
-                    lstSalesOrderItem.add(salesOrderItem);
-                    ((ArrayAdapter) ltvSalesOrderItem.getAdapter()).notifyDataSetChanged();
+                    lstSalesOrderItem.set(lstSalesOrderItem.indexOf(salesOrderItemOldTemp), salesOrderItem);
                     salesOrderItemOldTemp = null;
                     break;
             }
+            ((ArrayAdapter) ltvSalesOrderItem.getAdapter()).notifyDataSetChanged();
         }else
         if (resultCode == Activity.RESULT_CANCELED)
         {
