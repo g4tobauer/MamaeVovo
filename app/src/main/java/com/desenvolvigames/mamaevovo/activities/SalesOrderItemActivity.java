@@ -4,13 +4,13 @@ import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.desenvolvigames.mamaevovo.R;
 import com.desenvolvigames.mamaevovo.bussiness.MenuBussiness;
@@ -21,7 +21,6 @@ import com.desenvolvigames.mamaevovo.entities.SalesOrderItem;
 import com.desenvolvigames.mamaevovo.helpers.ProductSpinnerAdapter;
 
 import java.util.ArrayList;
-import java.util.function.Predicate;
 
 public class SalesOrderItemActivity extends ListActivity implements View.OnClickListener {
 
@@ -41,22 +40,60 @@ public class SalesOrderItemActivity extends ListActivity implements View.OnClick
         lstMenu = MenuBussiness.getInstance(getBaseContext()).Get(new Menu());
         setListAdapter(new ArrayAdapter<>(SalesOrderItemActivity.this, android.R.layout.simple_list_item_checked, lstMenu));
 
-        ArrayAdapter adapter = new ProductSpinnerAdapter(getBaseContext(), ProductBussiness.getInstance(getBaseContext()).Get(new Product()));
+        ProductSpinnerAdapter adapter = new ProductSpinnerAdapter(getBaseContext(), ProductBussiness.getInstance(getBaseContext()).Get(new Product()));
         adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
         spnSalesOrderitemProducts = findViewById(R.id.spn_salesorderitem_products);
         spnSalesOrderitemProducts.setAdapter(adapter);
 
         btnsalesOrderitemConfirm = findViewById(R.id.btn_salesorderitem_confirm);
         btnsalesOrderitemConfirm.setOnClickListener(SalesOrderItemActivity.this);
+//        lstMenuCheck.setItemChecked();
+        ManageAction();
     }
 
+    private void ManageAction()
+    {
+        Intent intent = getIntent();
+        switch(intent.getAction())
+        {
+            case "UPDATE":
+                SalesOrderItem salesOrderItem = intent.getParcelableExtra("key");
+                ProductSpinnerAdapter adapter = ((ProductSpinnerAdapter)spnSalesOrderitemProducts.getAdapter());
+                for(Product product : adapter.getProducts())
+                {
+                    if(salesOrderItem.Product.Id == product.Id)
+                    {
+                        spnSalesOrderitemProducts.setSelection(adapter.getPosition(product));
+                    }
+                }
+
+                for(Menu menu : salesOrderItem.MenuItem)
+                {
+                    if(menu.Active)
+                    {
+                        for (int i = 0; i < lstMenuCheck.getAdapter().getCount(); i++) {
+                            Menu menuInner = (Menu)lstMenuCheck.getAdapter().getItem(i);
+                            if(menu.Id == menuInner.Id)
+                            {
+                                menuInner.Active = true;
+                                lstMenuCheck.setItemChecked(i, menuInner.Active);
+                                break;
+                            }
+                        }
+                    }
+                }
+                break;
+        }
+    }
+
+
     @Override
-    public void onListItemClick(ListView parent, View v,int position,long id){
+    public void onListItemClick(ListView parent, View v, int position,long id){
         CheckedTextView item = (CheckedTextView) v;
         Menu menu = (Menu)parent.getItemAtPosition(position);
         menu.Active = item.isChecked();
-        Toast.makeText(SalesOrderItemActivity.this, menu.Description + " checked : " +
-                menu.Active, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(SalesOrderItemActivity.this, menu.Description + " checked : " +
+//                menu.Active, Toast.LENGTH_SHORT).show();
     }
 
 

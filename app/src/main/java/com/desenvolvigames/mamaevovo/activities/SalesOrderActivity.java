@@ -22,6 +22,10 @@ public class SalesOrderActivity extends ListActivity implements View.OnClickList
     private FloatingActionButton salesOrderItemAdd;
     private ListView ltvSalesOrderItem;
     private ArrayList<SalesOrderItem> lstSalesOrderItem;
+    private SalesOrderItem salesOrderItemOldTemp;
+
+    private static final int INSERT = 1;
+    private static final int UPDATE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,29 +48,46 @@ public class SalesOrderActivity extends ListActivity implements View.OnClickList
 
     @Override
     public void onListItemClick(ListView parent, View v,int position,long id){
-        SalesOrderItem salesOrderItem = (SalesOrderItem)parent.getItemAtPosition(position);
-        Toast.makeText(SalesOrderActivity.this, salesOrderItem.toString() , Toast.LENGTH_SHORT).show();
+        salesOrderItemOldTemp = (SalesOrderItem)parent.getItemAtPosition(position);
+        Intent myIntent = new Intent(SalesOrderActivity.this, SalesOrderItemActivity.class);
+        myIntent.putExtra("key", salesOrderItemOldTemp);
+        myIntent.setAction("UPDATE");
+        SalesOrderActivity.this.startActivityForResult(myIntent, UPDATE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK){
-                SalesOrderItem salesOrderItem = data.getParcelableExtra("result");
-                lstSalesOrderItem.add(salesOrderItem);
-                ((ArrayAdapter)ltvSalesOrderItem.getAdapter()).notifyDataSetChanged();
-            }else
-            if (resultCode == Activity.RESULT_CANCELED) {
-                //Write your code if there's no result
+        if(resultCode == Activity.RESULT_OK)
+        {
+            SalesOrderItem salesOrderItem;
+            switch (requestCode)
+            {
+                case INSERT:
+                    salesOrderItem = data.getParcelableExtra("result");
+                    lstSalesOrderItem.add(salesOrderItem);
+                    ((ArrayAdapter) ltvSalesOrderItem.getAdapter()).notifyDataSetChanged();
+                    break;
+                case UPDATE:
+                    lstSalesOrderItem.remove(salesOrderItemOldTemp);
+                    salesOrderItem = data.getParcelableExtra("result");
+                    lstSalesOrderItem.add(salesOrderItem);
+                    ((ArrayAdapter) ltvSalesOrderItem.getAdapter()).notifyDataSetChanged();
+                    salesOrderItemOldTemp = null;
+                    break;
             }
+        }else
+        if (resultCode == Activity.RESULT_CANCELED)
+        {
+            //Write your code if there's no result
         }
     }//onActivityResult
 
     @Override
     public void onClick(View v){
         Intent myIntent = new Intent(SalesOrderActivity.this, SalesOrderItemActivity.class);
-        SalesOrderActivity.this.startActivityForResult(myIntent, 1);
+        myIntent.setAction("INSERT");
+        SalesOrderActivity.this.startActivityForResult(myIntent, INSERT);
     }
 
     @Override
@@ -84,7 +105,7 @@ public class SalesOrderActivity extends ListActivity implements View.OnClickList
         CharSequence options[] = new CharSequence[]{"Sim", "Não"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Deseja deletar o item selecionado ?");
+        builder.setTitle("Deseja deletar o item " + salesOrderItem.Product.Description + " ?");
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

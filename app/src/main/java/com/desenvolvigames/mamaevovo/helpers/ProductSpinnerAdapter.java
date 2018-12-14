@@ -13,8 +13,11 @@ import java.util.ArrayList;
 
 public class ProductSpinnerAdapter extends ArrayAdapter<Product> {
 
-    public ProductSpinnerAdapter(Context context, ArrayList<Product> objects) {
-        super(context, R.layout.adapter_salesorderitem_spinner, objects);
+    private final ArrayList<Product> products;
+
+    public ProductSpinnerAdapter(Context context, ArrayList<Product> products) {
+        super(context, R.layout.adapter_salesorderitem_spinner, products);
+        this.products = products;
     }
 
     @Override //don't override if you don't want the default spinner to be a two line view
@@ -31,7 +34,11 @@ public class ProductSpinnerAdapter extends ArrayAdapter<Product> {
         if(convertView == null)
             convertView = View.inflate(getContext(),R.layout.adapter_salesorderitem_spinner,null);
         TextView Description = convertView.findViewById(R.id.txt_salesorderitem_product_adapter_description);
-        Description .setText(getItem(position).Description);
+        Description.setText(getItem(position).Description);
         return convertView;
+    }
+
+    public ArrayList<Product> getProducts() {
+        return products;
     }
 }
