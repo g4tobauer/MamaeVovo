@@ -8,6 +8,7 @@ public final class Contracts {
         public static final String TABLE_NAME = "Product";
         public static final String COLUMN_NAME_DESCRIPTION = "Description";
         public static final String COLUMN_NAME_UNIT = "Unit";
+        public static final String COLUMN_NAME_USASUBITENS = "UsaSubItens";
         public static final String COLUMN_NAME_PRICE = "Price";
         public static final String COLUMN_NAME_OBS = "Obs";
     }

@@ -47,6 +47,12 @@
             style="@style/DefaultTextEdit"
             android:hint="@string/product_price"
             android:inputType="numberDecimal" />
+        <CheckBox
+            android:id="@+id/chk_usa_subitens"
+            style="@style/DefaultCheckBox"
+            android:text="@string/product_usa_subitens"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <EditText
             android:id="@+id/ed_product_obs"

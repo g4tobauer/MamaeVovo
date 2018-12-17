@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -30,6 +31,7 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
     private EditText edtProductDescription;
     private EditText edtProductPrice;
     private EditText edtProductObs;
+    private CheckBox chkProductUsaSubItens;
     private RadioGroup rdgProductUnit;
     private RadioButton rbProductKg;
     private RadioButton rbProductUn;
@@ -45,6 +47,7 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
         edtProductDescription = findViewById(R.id.ed_product_description);
         edtProductPrice = findViewById(R.id.ed_product_price);
         edtProductObs = findViewById(R.id.ed_product_obs);
+        chkProductUsaSubItens = findViewById(R.id.chk_usa_subitens);
         rdgProductUnit = findViewById(R.id.rg_product_unit);
         rbProductKg = findViewById(R.id.rb_product_kg);
         rbProductUn = findViewById(R.id.rb_product_un);
@@ -79,6 +82,7 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
                             product.Unit = null;
                             break;
                 }
+                product.UsaSubItens = chkProductUsaSubItens.isChecked();
                 strTemp = edtProductObs.getText().toString();
                 product.Obs = strTemp.isEmpty() ? null : strTemp;
 
@@ -157,6 +161,7 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
         edtProductDescription.setText(product.Description);
         edtProductPrice.setText(String.format(Locale.getDefault(), "%.2f", product.Price == null ? 0 : product.Price));
         edtProductObs.setText(product.Obs);
+        chkProductUsaSubItens.setChecked(product.UsaSubItens);
         switch (product.Unit)
         {
             case UN:
@@ -176,6 +181,7 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
         edtProductPrice.setEnabled(value);
         edtProductObs.setEnabled(value);
         rdgProductUnit.setEnabled(value);
+        chkProductUsaSubItens.setEnabled(value);
         rbProductKg.setEnabled(value);
         rbProductUn.setEnabled(value);
     }

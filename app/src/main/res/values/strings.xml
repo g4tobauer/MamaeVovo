@@ -12,6 +12,7 @@
     <string name="product_description">Descrição</string>
     <string name="product_unit_un">Unidade</string>
     <string name="product_unit_kg">K/g</string>
+    <string name="product_usa_subitens">Usa sub itens</string>
     <string name="product_price">Preço</string>
     <string name="product_obs">Observação</string>
     <string name="product_insert_ok">Produto inserido!</string>

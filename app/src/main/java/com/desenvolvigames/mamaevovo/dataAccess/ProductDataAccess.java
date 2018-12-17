@@ -54,6 +54,12 @@ public class ProductDataAccess {
             sbSelection.append(Contracts.ProductEntry.COLUMN_NAME_UNIT + " = ?");
             arSelectionArgs.add(ProductUnitEnum.toInteger(product.Unit).toString());
         }
+        if(!(product.UsaSubItens == null))
+        {
+            if(sbSelection.length() > 0) sbSelection.append(" AND ");
+            sbSelection.append(Contracts.ProductEntry.COLUMN_NAME_USASUBITENS + " = ?");
+            arSelectionArgs.add(product.UsaSubItens.toString());
+        }
         if(!(product.Price == null))
         {
             if(sbSelection.length() > 0) sbSelection.append(" AND ");
@@ -72,6 +78,7 @@ public class ProductDataAccess {
                 Contracts.ProductEntry._ID,
                 Contracts.ProductEntry.COLUMN_NAME_DESCRIPTION,
                 Contracts.ProductEntry.COLUMN_NAME_UNIT,
+                Contracts.ProductEntry.COLUMN_NAME_USASUBITENS,
                 Contracts.ProductEntry.COLUMN_NAME_PRICE,
                 Contracts.ProductEntry.COLUMN_NAME_OBS
         };
@@ -85,6 +92,7 @@ public class ProductDataAccess {
             newProd.Id = cursor.getLong(cursor.getColumnIndexOrThrow(Contracts.ProductEntry._ID));
             newProd.Description = cursor.getString(cursor.getColumnIndexOrThrow(Contracts.ProductEntry.COLUMN_NAME_DESCRIPTION));
             newProd.Unit = ProductUnitEnum.fromInteger(cursor.getInt(cursor.getColumnIndexOrThrow(Contracts.ProductEntry.COLUMN_NAME_UNIT)));
+            newProd.UsaSubItens = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndexOrThrow(Contracts.ProductEntry.COLUMN_NAME_USASUBITENS)));
             newProd.Price = cursor.getDouble(cursor.getColumnIndexOrThrow(Contracts.ProductEntry.COLUMN_NAME_PRICE));
             newProd.Obs = cursor.getString(cursor.getColumnIndexOrThrow(Contracts.ProductEntry.COLUMN_NAME_OBS));
             mArrayList.add(newProd);
@@ -103,6 +111,8 @@ public class ProductDataAccess {
             values.put(Contracts.ProductEntry.COLUMN_NAME_DESCRIPTION, product.Description);
         if(product.Unit != null)
             values.put(Contracts.ProductEntry.COLUMN_NAME_UNIT, ProductUnitEnum.toInteger(product.Unit));
+        if(product.UsaSubItens != null)
+            values.put(Contracts.ProductEntry.COLUMN_NAME_USASUBITENS, product.UsaSubItens.toString());
         if(product.Price != null)
             values.put(Contracts.ProductEntry.COLUMN_NAME_PRICE, product.Price);
         if(product.Obs != null)
@@ -130,6 +140,8 @@ public class ProductDataAccess {
             values.put(Contracts.ProductEntry.COLUMN_NAME_DESCRIPTION, product.Description);
         if(product.Unit != null)
             values.put(Contracts.ProductEntry.COLUMN_NAME_UNIT, ProductUnitEnum.toInteger(product.Unit));
+        if(product.UsaSubItens != null)
+            values.put(Contracts.ProductEntry.COLUMN_NAME_USASUBITENS, product.UsaSubItens.toString());
         if(product.Price != null)
             values.put(Contracts.ProductEntry.COLUMN_NAME_PRICE, product.Price);
         if(product.Obs != null)
