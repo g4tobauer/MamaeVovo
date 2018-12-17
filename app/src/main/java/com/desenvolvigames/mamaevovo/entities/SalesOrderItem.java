@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class SalesOrderItem implements Parcelable {
     public Long Id;
     public Product Product;
+    public Double Quantidade;
     public ArrayList<Menu> MenuItem;
 
     public SalesOrderItem(){MenuItem = new ArrayList<>();}
@@ -19,6 +20,11 @@ public class SalesOrderItem implements Parcelable {
             Id = in.readLong();
         }
         Product = in.readParcelable(com.desenvolvigames.mamaevovo.entities.Product.class.getClassLoader());
+        if (in.readByte() == 0) {
+            Quantidade = null;
+        } else {
+            Quantidade = in.readDouble();
+        }
         MenuItem = in.createTypedArrayList(Menu.CREATOR);
         if(MenuItem == null)
             MenuItem = new ArrayList<>();
@@ -33,6 +39,12 @@ public class SalesOrderItem implements Parcelable {
             dest.writeLong(Id);
         }
         dest.writeParcelable(Product, flags);
+        if (Quantidade == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeDouble(Quantidade);
+        }
         dest.writeTypedList(MenuItem);
     }
 
@@ -55,6 +67,16 @@ public class SalesOrderItem implements Parcelable {
 
     @Override
     public String toString() {
-        return Product.Description;
+        StringBuilder sbResult = new StringBuilder();
+        sbResult.append(Product.Description);
+        sbResult.append(" (");
+        sbResult.append(Quantidade);
+        sbResult.append(" * ");
+        sbResult.append(Product.Price);
+        sbResult.append(" = ");
+        sbResult.append(" R$ ");
+        sbResult.append(Product.Price * Quantidade);
+        sbResult.append(")");
+        return sbResult.toString();
     }
 }
