@@ -19,13 +19,16 @@
         <activity android:name=".activities.PrincipalActivitty" />
         <activity android:name=".activities.ProductActivity" />
         <activity android:name=".activities.ProductListActivity" />
-        <activity android:name=".activities.SalesOrderActivity"
-                  android:theme="@style/AppTheme"/>
-        <activity android:name=".activities.SalesOrderItemActivity"></activity>
+        <activity
+            android:name=".activities.SalesOrderActivity"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activities.SalesOrderItemActivity" />
         <activity
             android:name=".activities.TesteActivity"
             android:label="@string/title_activity_teste"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.SubItemActivity" />
+        <activity android:name=".activities.SubItemListActivity"></activity>
     </application>
 
 </manifest>

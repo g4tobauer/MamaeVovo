@@ -3,14 +3,14 @@ package com.desenvolvigames.mamaevovo.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Menu implements Parcelable {
+public class SubItem implements Parcelable {
     public Long Id;
     public String Description;
     public Boolean Active;
 
-    public Menu(){}
+    public SubItem(){}
 
-    protected Menu(Parcel in) {
+    protected SubItem(Parcel in) {
         if (in.readByte() == 0) {
             Id = null;
         } else {
@@ -20,15 +20,15 @@ public class Menu implements Parcelable {
         Active = in.readByte() != 0;
     }
 
-    public static final Creator<Menu> CREATOR = new Creator<Menu>() {
+    public static final Creator<SubItem> CREATOR = new Creator<SubItem>() {
         @Override
-        public Menu createFromParcel(Parcel in) {
-            return new Menu(in);
+        public SubItem createFromParcel(Parcel in) {
+            return new SubItem(in);
         }
 
         @Override
-        public Menu[] newArray(int size) {
-            return new Menu[size];
+        public SubItem[] newArray(int size) {
+            return new SubItem[size];
         }
     };
 

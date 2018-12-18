@@ -89,13 +89,13 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
                 switch (action)
                 {
                     case INSERT:
-                        Insert(product, v);
+                        Insert(v);
                         break;
                     case UPDATE:
-                        Update(product, v);
+                        Update(v);
                         break;
                     case DELETE:
-                        Delete(product, v);
+                        Delete(v);
                         break;
                 }
                 break;
@@ -186,7 +186,7 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
         rbProductUn.setEnabled(value);
     }
 
-    private void Insert(Product product, View v){
+    private void Insert(View v){
         Handler handler = new Handler();
         Product resultProduct = ProductBussiness.getInstance(getBaseContext()).Insert(product);
         if(resultProduct != null && product.Description != null && product.Description.equals(resultProduct.Description))
@@ -203,7 +203,7 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    private void Update(Product product, View v){
+    private void Update(View v){
         Handler handler = new Handler();
         if(ProductBussiness.getInstance(getBaseContext()).Update(product))
         {
@@ -219,7 +219,7 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    private void Delete(Product product, View v){
+    private void Delete(View v){
         Handler handler = new Handler();
         if(ProductBussiness.getInstance(getBaseContext()).Delete(product))
         {

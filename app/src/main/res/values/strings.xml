@@ -24,6 +24,16 @@
 
     <string name="salesorder_title">Pedido</string>
 
+    <string name="subitem_title">Cadastro de SubItens</string>
+    <string name="subitem_description">Descrição</string>
+    <string name="subitem_active">Ativo</string>
+    <string name="subitem_insert_ok">SubItem inserido!</string>
+    <string name="subitem_insert_fail">SubItem não inserido!</string>
+    <string name="subitem_update_ok">SubItem alterado!</string>
+    <string name="subitem_update_fail">SubItem não alterado!</string>
+    <string name="subitem_delete_ok">SubItem deletado!</string>
+    <string name="subitem_delete_fail">SubItem não deletado!</string>
+
     <string name="salesorderitem_title">Item</string>
     <string name="title_activity_teste">teste</string>
 </resources>

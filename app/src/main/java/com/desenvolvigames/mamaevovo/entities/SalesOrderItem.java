@@ -9,9 +9,10 @@ public class SalesOrderItem implements Parcelable {
     public Long Id;
     public Product Product;
     public Double Quantidade;
-    public ArrayList<Menu> MenuItem;
+    public ArrayList<SubItem> subItemItem;
 
-    public SalesOrderItem(){MenuItem = new ArrayList<>();}
+    public SalesOrderItem(){
+        subItemItem = new ArrayList<>();}
 
     protected SalesOrderItem(Parcel in) {
         if (in.readByte() == 0) {
@@ -25,9 +26,9 @@ public class SalesOrderItem implements Parcelable {
         } else {
             Quantidade = in.readDouble();
         }
-        MenuItem = in.createTypedArrayList(Menu.CREATOR);
-        if(MenuItem == null)
-            MenuItem = new ArrayList<>();
+        subItemItem = in.createTypedArrayList(SubItem.CREATOR);
+        if(subItemItem == null)
+            subItemItem = new ArrayList<>();
     }
 
     @Override
@@ -45,7 +46,7 @@ public class SalesOrderItem implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeDouble(Quantidade);
         }
-        dest.writeTypedList(MenuItem);
+        dest.writeTypedList(subItemItem);
     }
 
     @Override

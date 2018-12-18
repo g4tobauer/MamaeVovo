@@ -17,24 +17,21 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.desenvolvigames.mamaevovo.R;
-import com.desenvolvigames.mamaevovo.bussiness.MenuBussiness;
+import com.desenvolvigames.mamaevovo.bussiness.SubItemBussiness;
 import com.desenvolvigames.mamaevovo.bussiness.ProductBussiness;
-import com.desenvolvigames.mamaevovo.entities.Menu;
+import com.desenvolvigames.mamaevovo.entities.SubItem;
 import com.desenvolvigames.mamaevovo.entities.Product;
 import com.desenvolvigames.mamaevovo.entities.SalesOrderItem;
 import com.desenvolvigames.mamaevovo.helpers.ProductSpinnerAdapter;
-import com.desenvolvigames.mamaevovo.helpers.ProductUnitEnum;
 
 import java.util.ArrayList;
-
-import static com.desenvolvigames.mamaevovo.helpers.ProductUnitEnum.*;
 
 public class SalesOrderItemActivity extends ListActivity implements View.OnClickListener {
 
     private Spinner spnSalesOrderitemProducts;
     private Button btnsalesOrderitemConfirm;
     private ListView lstMenuCheck;
-    private ArrayList<Menu> lstMenu;
+    private ArrayList<SubItem> lstSubItems;
     private SalesOrderItem salesOrderItem;
 
     @Override
@@ -45,8 +42,8 @@ public class SalesOrderItemActivity extends ListActivity implements View.OnClick
         lstMenuCheck = getListView();
         lstMenuCheck.setChoiceMode(lstMenuCheck.CHOICE_MODE_MULTIPLE);
         lstMenuCheck.setTextFilterEnabled(true);
-        lstMenu = MenuBussiness.getInstance(getBaseContext()).Get(new Menu());
-        setListAdapter(new ArrayAdapter<>(SalesOrderItemActivity.this, android.R.layout.simple_list_item_checked, lstMenu));
+        lstSubItems = SubItemBussiness.getInstance(getBaseContext()).Get(new SubItem());
+        setListAdapter(new ArrayAdapter<>(SalesOrderItemActivity.this, android.R.layout.simple_list_item_checked, lstSubItems));
 
         ProductSpinnerAdapter adapter = new ProductSpinnerAdapter(getBaseContext(), ProductBussiness.getInstance(getBaseContext()).Get(new Product()));
         adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
@@ -62,25 +59,25 @@ public class SalesOrderItemActivity extends ListActivity implements View.OnClick
     @Override
     public void onListItemClick(ListView parent, View v, int position,long id){
         CheckedTextView item = (CheckedTextView) v;
-        Menu menu = (Menu)parent.getItemAtPosition(position);
-        menu.Active = item.isChecked();
-//        Toast.makeText(SalesOrderItemActivity.this, menu.Description + " checked : " +
-//                menu.Active, Toast.LENGTH_SHORT).show();
+        SubItem subItem = (SubItem)parent.getItemAtPosition(position);
+        subItem.Active = item.isChecked();
+//        Toast.makeText(SalesOrderItemActivity.this, subItem.Description + " checked : " +
+//                subItem.Active, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onClick(View v) {
         if(salesOrderItem == null)
             salesOrderItem = new SalesOrderItem();
-        ArrayList<Menu> lstMenuTemp = new ArrayList<>();
-        salesOrderItem.MenuItem.clear();
-        for(Menu menu : lstMenu)
+        ArrayList<SubItem> lstSubItemTemp = new ArrayList<>();
+        salesOrderItem.subItemItem.clear();
+        for(SubItem subItem : lstSubItems)
         {
-            if(menu.Active)
-                lstMenuTemp.add(menu);
+            if(subItem.Active)
+                lstSubItemTemp.add(subItem);
         }
         salesOrderItem.Product = (Product) spnSalesOrderitemProducts.getSelectedItem();
-        salesOrderItem.MenuItem = lstMenuTemp;
+        salesOrderItem.subItemItem = lstSubItemTemp;
         InputConditions();
     }
 
@@ -156,15 +153,15 @@ public class SalesOrderItemActivity extends ListActivity implements View.OnClick
 
                 for (int i = 0; i < lstMenuCheck.getAdapter().getCount(); i++)
                 {
-                    Menu menuTemp = (Menu)lstMenuCheck.getAdapter().getItem(i);
-                    menuTemp.Active = false;
-                    lstMenuCheck.setItemChecked(i, menuTemp.Active);
-                    for(Menu menu : salesOrderItem.MenuItem)
+                    SubItem subItemTemp = (SubItem)lstMenuCheck.getAdapter().getItem(i);
+                    subItemTemp.Active = false;
+                    lstMenuCheck.setItemChecked(i, subItemTemp.Active);
+                    for(SubItem subItem : salesOrderItem.subItemItem)
                     {
-                        if(menu.Id == menuTemp.Id)
+                        if(subItem.Id == subItemTemp.Id)
                         {
-                            menuTemp.Active = menu.Active;
-                            lstMenuCheck.setItemChecked(i, menuTemp.Active);
+                            subItemTemp.Active = subItem.Active;
+                            lstMenuCheck.setItemChecked(i, subItemTemp.Active);
                             break;
                         }
                     }
@@ -173,8 +170,8 @@ public class SalesOrderItemActivity extends ListActivity implements View.OnClick
             default:
                 for (int i = 0; i < lstMenuCheck.getAdapter().getCount(); i++)
                 {
-                    Menu menu = (Menu)lstMenuCheck.getAdapter().getItem(i);
-                    lstMenuCheck.setItemChecked(i, menu.Active);
+                    SubItem subItem = (SubItem)lstMenuCheck.getAdapter().getItem(i);
+                    lstMenuCheck.setItemChecked(i, subItem.Active);
                 }
                 break;
         }

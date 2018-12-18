@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.SubItemActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/tx_subitem_title"
+            style="@style/DefaultTextTitle"
+            android:text="@string/subitem_title" />
+
+        <EditText
+            android:id="@+id/edt_subitem_description"
+            style="@style/DefaultTextEdit"
+            android:hint="@string/subitem_description"
+            android:inputType="text" />
+
+        <CheckBox
+            android:id="@+id/chk_subitem_active"
+            style="@style/DefaultCheckBox"
+            android:text="@string/subitem_active"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_subitem_confirm"
+        style="@style/DefaultButton"
+        android:layout_weight="0"
+        android:text="@string/confirm" />
+
+</android.support.v7.widget.LinearLayoutCompat>

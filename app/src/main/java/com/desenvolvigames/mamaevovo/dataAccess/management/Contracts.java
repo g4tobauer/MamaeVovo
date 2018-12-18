@@ -12,8 +12,8 @@ public final class Contracts {
         public static final String COLUMN_NAME_PRICE = "Price";
         public static final String COLUMN_NAME_OBS = "Obs";
     }
-    public static class MenuEntry implements BaseColumns {
-        public static final String TABLE_NAME = "Menu";
+    public static class SubItemEntry implements BaseColumns {
+        public static final String TABLE_NAME = "SubItem";
         public static final String COLUMN_NAME_DESCRIPTION = "Description";
         public static final String COLUMN_NAME_ACTIVE = "Active";
     }

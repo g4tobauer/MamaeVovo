@@ -23,15 +23,15 @@ public class DbHelper extends SQLiteOpenHelper {
                 Contracts.ProductEntry.COLUMN_NAME_PRICE + REAL_TYPE +COMMA_SEP +
                 Contracts.ProductEntry.COLUMN_NAME_OBS + TEXT_TYPE +
             " )";
-    private static final String SQL_CREATE_MENUS = "CREATE TABLE " + Contracts.MenuEntry.TABLE_NAME +
+    private static final String SQL_CREATE_SUBITENS = "CREATE TABLE " + Contracts.SubItemEntry.TABLE_NAME +
             " (" +
-                Contracts.MenuEntry._ID + INTEGER_TYPE + " PRIMARY KEY" + COMMA_SEP +
-                Contracts.MenuEntry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE + COMMA_SEP +
-                Contracts.MenuEntry.COLUMN_NAME_ACTIVE + TEXT_TYPE +
+                Contracts.SubItemEntry._ID + INTEGER_TYPE + " PRIMARY KEY" + COMMA_SEP +
+                Contracts.SubItemEntry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE + COMMA_SEP +
+                Contracts.SubItemEntry.COLUMN_NAME_ACTIVE + TEXT_TYPE +
             " )";
 
     private static final String SQL_DELETE_PRODUCTS = "DROP TABLE IF EXISTS " + Contracts.ProductEntry.TABLE_NAME;
-    private static final String SQL_DELETE_MENUS = "DROP TABLE IF EXISTS " + Contracts.MenuEntry.TABLE_NAME;
+    private static final String SQL_DELETE_MENUS = "DROP TABLE IF EXISTS " + Contracts.SubItemEntry.TABLE_NAME;
 
 
     public DbHelper(Context context) {
@@ -39,7 +39,7 @@ public class DbHelper extends SQLiteOpenHelper {
     }
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_PRODUCTS);
-        db.execSQL(SQL_CREATE_MENUS);
+        db.execSQL(SQL_CREATE_SUBITENS);
     }
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(SQL_DELETE_PRODUCTS);
