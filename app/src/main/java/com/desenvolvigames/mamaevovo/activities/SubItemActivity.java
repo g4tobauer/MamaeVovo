@@ -26,20 +26,17 @@ public class SubItemActivity extends AppCompatActivity implements View.OnClickLi
     private EditText edtSubitemDescription;
     private CheckBox chkSubitemActive;
     private Button btnSubitemConfirm;
-    private String action;
     private boolean actionIsOk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subitem);
-        Intent intent = getIntent();
-        action = intent.getStringExtra("key"); //if it's a string you stored.
         edtSubitemDescription = findViewById(R.id.edt_subitem_description);
         chkSubitemActive = findViewById(R.id.chk_subitem_active);
         btnSubitemConfirm = findViewById(R.id.btn_subitem_confirm);
         btnSubitemConfirm.setOnClickListener(SubItemActivity.this);
-        InitFields(intent);
+        InitFields();
     }
 
     @Override
@@ -51,7 +48,7 @@ public class SubItemActivity extends AppCompatActivity implements View.OnClickLi
                 strTemp = edtSubitemDescription.getText().toString();
                 subItem.Description = strTemp.isEmpty() ? null : strTemp;
                 subItem.Active = chkSubitemActive.isChecked();
-                switch (action)
+                switch (getIntent().getAction())
                 {
                     case INSERT:
                         Insert(v);
@@ -82,8 +79,9 @@ public class SubItemActivity extends AppCompatActivity implements View.OnClickLi
         finish();
     }
 
-    private void InitFields(Intent intent){
-        switch (action)
+    private void InitFields(){
+        Intent intent = getIntent();
+        switch(intent.getAction())
         {
             case INSERT:
                 subItem = new SubItem();
@@ -109,7 +107,7 @@ public class SubItemActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void FillFields(Intent intent){
-        subItem  = intent.getParcelableExtra("obj"); //if it's a string you stored.
+        subItem  = intent.getParcelableExtra("key"); //if it's a string you stored.
         edtSubitemDescription.setText(subItem.Description);
         chkSubitemActive.setChecked(subItem.Active);
     }

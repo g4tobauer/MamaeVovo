@@ -8,7 +8,9 @@ import android.widget.Button;
 
 import com.desenvolvigames.mamaevovo.R;
 import com.desenvolvigames.mamaevovo.bussiness.ProductBussiness;
+import com.desenvolvigames.mamaevovo.bussiness.SubItemBussiness;
 import com.desenvolvigames.mamaevovo.entities.Product;
+import com.desenvolvigames.mamaevovo.entities.SubItem;
 
 import java.util.ArrayList;
 
@@ -16,38 +18,55 @@ public class PrincipalActivitty extends AppCompatActivity implements View.OnClic
 
     private Button btnPrincipalCadastre;
     private Button btnSalesOrder;
+    private Button btnSubItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal_activitty);
-        btnPrincipalCadastre = findViewById(R.id.bt_principal_cadastre);
-        btnSalesOrder = findViewById(R.id.bt_principal_salesorder);
+        btnPrincipalCadastre = findViewById(R.id.btn_principal_product);
+        btnSalesOrder = findViewById(R.id.btn_principal_salesorder);
+        btnSubItem = findViewById(R.id.btn_principal_subitem);
         btnPrincipalCadastre.setOnClickListener(PrincipalActivitty.this);
         btnSalesOrder.setOnClickListener(PrincipalActivitty.this);
+        btnSubItem.setOnClickListener(PrincipalActivitty.this);
     }
 
     @Override
     public void onClick(View v)
     {
+        Intent myIntent;
         switch (v.getId())
         {
-            case R.id.bt_principal_cadastre:
+            case R.id.btn_principal_product:
                 ArrayList<Product> lstProduct = ProductBussiness.getInstance(getBaseContext()).Get(new Product());
                 if(lstProduct.isEmpty()) {
-                    Intent myIntent = new Intent(PrincipalActivitty.this, ProductActivity.class);
+                    myIntent = new Intent(PrincipalActivitty.this, ProductActivity.class);
                     myIntent.putExtra("key", ProductActivity.INSERT); //Optional parameters
                     PrincipalActivitty.this.startActivity(myIntent);
                 }else
                 {
-                    Intent myIntent = new Intent(PrincipalActivitty.this, ProductListActivity.class);
+                    myIntent = new Intent(PrincipalActivitty.this, ProductListActivity.class);
                     myIntent.putParcelableArrayListExtra("key", lstProduct);
                     PrincipalActivitty.this.startActivity(myIntent);
                 }
                 break;
-            case R.id.bt_principal_salesorder:
-                Intent myIntent = new Intent(PrincipalActivitty.this, SalesOrderActivity.class);
+            case R.id.btn_principal_salesorder:
+                myIntent = new Intent(PrincipalActivitty.this, SalesOrderActivity.class);
                 PrincipalActivitty.this.startActivity(myIntent);
+                break;
+            case R.id.btn_principal_subitem:
+                ArrayList<SubItem> lstSubItem = SubItemBussiness.getInstance(getBaseContext()).Get(new SubItem());
+                if(lstSubItem.isEmpty()) {
+                    myIntent = new Intent(PrincipalActivitty.this, SubItemActivity.class);
+                    myIntent.putExtra("key", SubItemActivity.INSERT); //Optional parameters
+                    PrincipalActivitty.this.startActivity(myIntent);
+                }else
+                {
+                    myIntent = new Intent(PrincipalActivitty.this, SubItemListActivity.class);
+                    myIntent.putParcelableArrayListExtra("key", lstSubItem);
+                    PrincipalActivitty.this.startActivity(myIntent);
+                }
                 break;
         }
         finish();

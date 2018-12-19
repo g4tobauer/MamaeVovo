@@ -12,14 +12,19 @@ tools:context=".activities.PrincipalActivitty">
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/bt_principal_salesorder"
+            android:id="@+id/btn_principal_salesorder"
             style="@style/DefaultButton"
-            android:text="@string/principal_product_salesorder"/>
+            android:text="@string/principal_cadastre_salesorder"/>
 
         <Button
-            android:id="@+id/bt_principal_cadastre"
+            android:id="@+id/btn_principal_product"
             style="@style/DefaultButton"
-            android:text="@string/principal_product_cadastre"/>
+            android:text="@string/principal_cadastre_product"/>
+
+        <Button
+            android:id="@+id/btn_principal_subitem"
+            style="@style/DefaultButton"
+            android:text="@string/principal_cadastre_subitem"/>
     </LinearLayout>
 
 </android.support.v7.widget.LinearLayoutCompat>

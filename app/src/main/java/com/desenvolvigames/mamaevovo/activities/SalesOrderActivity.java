@@ -17,7 +17,7 @@ import com.desenvolvigames.mamaevovo.entities.SalesOrderItem;
 
 import java.util.ArrayList;
 
-public class SalesOrderActivity extends ListActivity implements View.OnClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener{
+public class SalesOrderActivity extends ListActivity implements View.OnClickListener, AdapterView.OnItemLongClickListener{
     private FloatingActionButton salesOrderItemAdd;
     private ListView ltvSalesOrderItem;
     private ArrayList<SalesOrderItem> lstSalesOrderItem;
@@ -30,10 +30,6 @@ public class SalesOrderActivity extends ListActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_salesorder);
-        Intent myIntent = getIntent();
-//        ArrayList<Product> lstProductTemp = myIntent.getParcelableArrayListExtra("key");
-//        if(lstProductTemp != null) lstProduct.addAll(lstProductTemp);
-//        else lstProduct = new ArrayList<>();
         lstSalesOrderItem = new ArrayList<>();
         ltvSalesOrderItem = getListView();
         ltvSalesOrderItem.setChoiceMode(ltvSalesOrderItem.CHOICE_MODE_SINGLE);
@@ -91,14 +87,6 @@ public class SalesOrderActivity extends ListActivity implements View.OnClickList
         Intent myIntent = new Intent(SalesOrderActivity.this, SalesOrderItemActivity.class);
         myIntent.setAction("INSERT");
         SalesOrderActivity.this.startActivityForResult(myIntent, INSERT);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//        Intent myIntent = new Intent(SalesOrderActivity.this, SalesOrderItemActivity.class);
-//        myIntent.putExtra("key", ProductActivity.UPDATE); //Optional parameters
-//        myIntent.putExtra("obj", (Product)parent.getItemAtPosition(position)); //Optional parameters
-//        SalesOrderActivity.this.startActivity(myIntent);
     }
 
     @Override
