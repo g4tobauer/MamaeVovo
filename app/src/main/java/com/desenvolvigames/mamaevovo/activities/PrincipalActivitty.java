@@ -42,7 +42,7 @@ public class PrincipalActivitty extends AppCompatActivity implements View.OnClic
                 ArrayList<Product> lstProduct = ProductBussiness.getInstance(getBaseContext()).Get(new Product());
                 if(lstProduct.isEmpty()) {
                     myIntent = new Intent(PrincipalActivitty.this, ProductActivity.class);
-                    myIntent.putExtra("key", ProductActivity.INSERT); //Optional parameters
+                    myIntent.setAction(ProductActivity.INSERT);
                     PrincipalActivitty.this.startActivity(myIntent);
                 }else
                 {
@@ -59,7 +59,7 @@ public class PrincipalActivitty extends AppCompatActivity implements View.OnClic
                 ArrayList<SubItem> lstSubItem = SubItemBussiness.getInstance(getBaseContext()).Get(new SubItem());
                 if(lstSubItem.isEmpty()) {
                     myIntent = new Intent(PrincipalActivitty.this, SubItemActivity.class);
-                    myIntent.putExtra("key", SubItemActivity.INSERT); //Optional parameters
+                    myIntent.setAction(SubItemActivity.INSERT);
                     PrincipalActivitty.this.startActivity(myIntent);
                 }else
                 {

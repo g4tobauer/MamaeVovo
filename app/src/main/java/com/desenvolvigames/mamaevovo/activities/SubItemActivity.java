@@ -16,11 +16,7 @@ import com.desenvolvigames.mamaevovo.entities.SubItem;
 
 import java.util.ArrayList;
 
-public class SubItemActivity extends AppCompatActivity implements View.OnClickListener, Runnable{
-
-    public static final String INSERT = "INSERT";
-    public static final String UPDATE = "UPDATE";
-    public static final String DELETE = "DELETE";
+public class SubItemActivity extends CadastreBaseActivity{
 
     private SubItem subItem;
     private EditText edtSubitemDescription;
@@ -79,88 +75,6 @@ public class SubItemActivity extends AppCompatActivity implements View.OnClickLi
         finish();
     }
 
-    private void InitFields(){
-        Intent intent = getIntent();
-        switch(intent.getAction())
-        {
-            case INSERT:
-                subItem = new SubItem();
-                EnableFields(true);
-                btnSubitemConfirm.setText(R.string.insert);
-                break;
-            case UPDATE:
-                FillFields(intent);
-                EnableFields(true);
-                btnSubitemConfirm.setText(R.string.update);
-                break;
-            case DELETE:
-                FillFields(intent);
-                EnableFields(false);
-                btnSubitemConfirm.setText(R.string.delete);
-                break;
-        }
-    }
-
-    private void EnableFields(boolean value){
-        edtSubitemDescription.setEnabled(value);
-        chkSubitemActive.setEnabled(value);
-    }
-
-    private void FillFields(Intent intent){
-        subItem  = intent.getParcelableExtra("key"); //if it's a string you stored.
-        edtSubitemDescription.setText(subItem.Description);
-        chkSubitemActive.setChecked(subItem.Active);
-    }
-
-    private void Insert(View v){
-        Handler handler = new Handler();
-        SubItem resultSubItem = SubItemBussiness.getInstance(getBaseContext()).Insert(subItem);
-        if(resultSubItem != null && subItem.Description != null && subItem.Description.equals(resultSubItem.Description))
-        {
-            actionIsOk = true;
-            Snackbar.make(v, R.string.subitem_insert_ok, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
-            handler.postDelayed(SubItemActivity.this, 2000); // 5000ms delay
-        }
-        else
-        {
-            actionIsOk = false;
-            Snackbar.make(v, R.string.subitem_insert_fail, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
-            handler.postDelayed(SubItemActivity.this, 2000); // 5000ms delay
-        }
-    }
-
-    private void Update(View v){
-        Handler handler = new Handler();
-        if(SubItemBussiness.getInstance(getBaseContext()).Update(subItem))
-        {
-            actionIsOk = true;
-            Snackbar.make(v, R.string.subitem_update_ok, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
-            handler.postDelayed(SubItemActivity.this, 2000); // 5000ms delay
-        }
-        else
-        {
-            actionIsOk = false;
-            Snackbar.make(v, R.string.subitem_update_fail, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
-            handler.postDelayed(SubItemActivity.this, 2000); // 5000ms delay
-        }
-    }
-
-    private void Delete(View v){
-        Handler handler = new Handler();
-        if(SubItemBussiness.getInstance(getBaseContext()).Delete(subItem))
-        {
-            actionIsOk = true;
-            Snackbar.make(v, R.string.subitem_delete_ok, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
-            handler.postDelayed(SubItemActivity.this, 2000); // 5000ms delay
-        }
-        else
-        {
-            actionIsOk = false;
-            Snackbar.make(v, R.string.subitem_delete_fail, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
-            handler.postDelayed(SubItemActivity.this, 2000); // 5000ms delay
-        }
-    }
-
     @Override
     public void run() {
         ArrayList<SubItem> lstProduct = SubItemBussiness.getInstance(getBaseContext()).Get(new SubItem());
@@ -178,4 +92,92 @@ public class SubItemActivity extends AppCompatActivity implements View.OnClickLi
             finish();
         }
     }
+
+    @Override
+    protected void InitFields(){
+        switch(getIntent().getAction())
+        {
+            case INSERT:
+                subItem = new SubItem();
+                EnableFields(true);
+                btnSubitemConfirm.setText(R.string.insert);
+                break;
+            case UPDATE:
+                FillFields();
+                EnableFields(true);
+                btnSubitemConfirm.setText(R.string.update);
+                break;
+            case DELETE:
+                FillFields();
+                EnableFields(false);
+                btnSubitemConfirm.setText(R.string.delete);
+                break;
+        }
+    }
+
+    @Override
+    protected void FillFields(){
+        subItem  = getIntent().getParcelableExtra("key"); //if it's a string you stored.
+        edtSubitemDescription.setText(subItem.Description);
+        chkSubitemActive.setChecked(subItem.Active);
+    }
+
+    @Override
+    protected void EnableFields(boolean value){
+        edtSubitemDescription.setEnabled(value);
+        chkSubitemActive.setEnabled(value);
+    }
+
+    @Override
+    protected void Insert(View v){
+        Handler handler = new Handler();
+        SubItem resultSubItem = SubItemBussiness.getInstance(getBaseContext()).Insert(subItem);
+        if(resultSubItem != null && subItem.Description != null && subItem.Description.equals(resultSubItem.Description))
+        {
+            actionIsOk = true;
+            Snackbar.make(v, R.string.subitem_insert_ok, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+            handler.postDelayed(SubItemActivity.this, 2000); // 5000ms delay
+        }
+        else
+        {
+            actionIsOk = false;
+            Snackbar.make(v, R.string.subitem_insert_fail, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+            handler.postDelayed(SubItemActivity.this, 2000); // 5000ms delay
+        }
+    }
+
+    @Override
+    protected void Update(View v){
+        Handler handler = new Handler();
+        if(SubItemBussiness.getInstance(getBaseContext()).Update(subItem))
+        {
+            actionIsOk = true;
+            Snackbar.make(v, R.string.subitem_update_ok, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+            handler.postDelayed(SubItemActivity.this, 2000); // 5000ms delay
+        }
+        else
+        {
+            actionIsOk = false;
+            Snackbar.make(v, R.string.subitem_update_fail, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+            handler.postDelayed(SubItemActivity.this, 2000); // 5000ms delay
+        }
+    }
+
+    @Override
+    protected void Delete(View v){
+        Handler handler = new Handler();
+        if(SubItemBussiness.getInstance(getBaseContext()).Delete(subItem))
+        {
+            actionIsOk = true;
+            Snackbar.make(v, R.string.subitem_delete_ok, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+            handler.postDelayed(SubItemActivity.this, 2000); // 5000ms delay
+        }
+        else
+        {
+            actionIsOk = false;
+            Snackbar.make(v, R.string.subitem_delete_fail, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+            handler.postDelayed(SubItemActivity.this, 2000); // 5000ms delay
+        }
+    }
+
 }

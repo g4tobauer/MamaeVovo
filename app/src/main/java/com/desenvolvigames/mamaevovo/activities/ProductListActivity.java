@@ -35,7 +35,7 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v){
         Intent myIntent = new Intent(ProductListActivity.this, ProductActivity.class);
-        myIntent.putExtra("key", ProductActivity.INSERT); //Optional parameters
+        myIntent.setAction(ProductActivity.INSERT);
         ProductListActivity.this.startActivity(myIntent);
         finish();
     }
@@ -43,8 +43,8 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent myIntent = new Intent(ProductListActivity.this, ProductActivity.class);
-        myIntent.putExtra("key", ProductActivity.UPDATE); //Optional parameters
-        myIntent.putExtra("obj", (Product)parent.getItemAtPosition(position)); //Optional parameters
+        myIntent.setAction(ProductActivity.UPDATE);
+        myIntent.putExtra("key", (Product)parent.getItemAtPosition(position)); //Optional parameters
         ProductListActivity.this.startActivity(myIntent);
         finish();
     }
@@ -52,8 +52,8 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
     @Override
     public boolean onItemLongClick(AdapterView<?> arg0, View arg1,int pos, long id) {
         Intent myIntent = new Intent(ProductListActivity.this, ProductActivity.class);
-        myIntent.putExtra("key", ProductActivity.DELETE); //Optional parameters
-        myIntent.putExtra("obj", (Product)arg0.getItemAtPosition(pos)); //Optional parameters
+        myIntent.setAction(ProductActivity.DELETE);
+        myIntent.putExtra("key", (Product)arg0.getItemAtPosition(pos)); //Optional parameters
         ProductListActivity.this.startActivity(myIntent);
         finish();
         return true;

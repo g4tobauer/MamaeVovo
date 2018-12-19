@@ -20,11 +20,7 @@ import com.desenvolvigames.mamaevovo.helpers.ProductUnitEnum;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class ProductActivity extends AppCompatActivity implements View.OnClickListener, Runnable{
-
-    public static final String INSERT = "INSERT";
-    public static final String UPDATE = "UPDATE";
-    public static final String DELETE = "DELETE";
+public class ProductActivity extends CadastreBaseActivity {
 
     private Product product;
     private Button btnProductConfirm;
@@ -35,15 +31,12 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
     private RadioGroup rdgProductUnit;
     private RadioButton rbProductKg;
     private RadioButton rbProductUn;
-    private String action;
     private boolean actionIsOk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
-        Intent intent = getIntent();
-        action = intent.getStringExtra("key"); //if it's a string you stored.
         edtProductDescription = findViewById(R.id.ed_product_description);
         edtProductPrice = findViewById(R.id.ed_product_price);
         edtProductObs = findViewById(R.id.ed_product_obs);
@@ -51,11 +44,9 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
         rdgProductUnit = findViewById(R.id.rg_product_unit);
         rbProductKg = findViewById(R.id.rb_product_kg);
         rbProductUn = findViewById(R.id.rb_product_un);
-
         btnProductConfirm = findViewById(R.id.bt_product_confirm);
         btnProductConfirm.setOnClickListener(ProductActivity.this);
-
-        InitFields(intent);
+        InitFields();
     }
 
     @Override
@@ -86,7 +77,7 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
                 strTemp = edtProductObs.getText().toString();
                 product.Obs = strTemp.isEmpty() ? null : strTemp;
 
-                switch (action)
+                switch (getIntent().getAction())
                 {
                     case INSERT:
                         Insert(v);
@@ -135,8 +126,9 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    private void InitFields(Intent intent){
-        switch (action)
+    @Override
+    protected void InitFields(){
+        switch (getIntent().getAction())
         {
             case INSERT:
                 product = new Product();
@@ -144,20 +136,21 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
                 btnProductConfirm.setText(R.string.insert);
                 break;
             case UPDATE:
-                FillFields(intent);
+                FillFields();
                 EnableFields(true);
                 btnProductConfirm.setText(R.string.update);
                 break;
             case DELETE:
-                FillFields(intent);
+                FillFields();
                 EnableFields(false);
                 btnProductConfirm.setText(R.string.delete);
                 break;
         }
     }
 
-    private void FillFields(Intent intent){
-        product  = intent.getParcelableExtra("obj"); //if it's a string you stored.
+    @Override
+    protected void FillFields(){
+        product  = getIntent().getParcelableExtra("key"); //if it's a string you stored.
         edtProductDescription.setText(product.Description);
         edtProductPrice.setText(String.format(Locale.getDefault(), "%.2f", product.Price == null ? 0 : product.Price));
         edtProductObs.setText(product.Obs);
@@ -176,7 +169,8 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    private void EnableFields(boolean value){
+    @Override
+    protected void EnableFields(boolean value){
         edtProductDescription.setEnabled(value);
         edtProductPrice.setEnabled(value);
         edtProductObs.setEnabled(value);
@@ -186,7 +180,8 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
         rbProductUn.setEnabled(value);
     }
 
-    private void Insert(View v){
+    @Override
+    protected void Insert(View v){
         Handler handler = new Handler();
         Product resultProduct = ProductBussiness.getInstance(getBaseContext()).Insert(product);
         if(resultProduct != null && product.Description != null && product.Description.equals(resultProduct.Description))
@@ -203,7 +198,8 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    private void Update(View v){
+    @Override
+    protected void Update(View v){
         Handler handler = new Handler();
         if(ProductBussiness.getInstance(getBaseContext()).Update(product))
         {
@@ -219,7 +215,8 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    private void Delete(View v){
+    @Override
+    protected void Delete(View v){
         Handler handler = new Handler();
         if(ProductBussiness.getInstance(getBaseContext()).Delete(product))
         {

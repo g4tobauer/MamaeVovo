@@ -53,7 +53,7 @@ public class SubItemDataAccess {
             arSelectionArgs.add(subItem.Active.toString());
         }
 
-        String sortOrder = Contracts.SubItemEntry.COLUMN_NAME_DESCRIPTION + " ASC";
+        String sortOrder = Contracts.SubItemEntry._ID + " ASC";
 
         String[] projection = {
                 Contracts.SubItemEntry._ID,

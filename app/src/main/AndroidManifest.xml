@@ -28,7 +28,8 @@
             android:label="@string/title_activity_teste"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.SubItemActivity" />
-        <activity android:name=".activities.SubItemListActivity"></activity>
+        <activity android:name=".activities.SubItemListActivity" />
+        <activity android:name=".activities.CadastreBaseActivity"></activity>
     </application>
 
 </manifest>

@@ -72,7 +72,7 @@ public class ProductDataAccess {
             sbSelection.append(Contracts.ProductEntry.COLUMN_NAME_OBS + " = ?");
             arSelectionArgs.add(product.Obs);
         }
-        String sortOrder = Contracts.ProductEntry.COLUMN_NAME_DESCRIPTION + " ASC";
+        String sortOrder = Contracts.ProductEntry._ID + " ASC";
 
         String[] projection = {
                 Contracts.ProductEntry._ID,
