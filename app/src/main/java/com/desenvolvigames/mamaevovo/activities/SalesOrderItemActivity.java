@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckedTextView;
@@ -26,7 +27,7 @@ import com.desenvolvigames.mamaevovo.helpers.ProductSpinnerAdapter;
 
 import java.util.ArrayList;
 
-public class SalesOrderItemActivity extends ListActivity implements View.OnClickListener {
+public class SalesOrderItemActivity extends ListActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private Spinner spnSalesOrderitemProducts;
     private Button btnsalesOrderitemConfirm;
@@ -44,16 +45,35 @@ public class SalesOrderItemActivity extends ListActivity implements View.OnClick
         lstMenuCheck.setTextFilterEnabled(true);
         lstSubItems = SubItemBussiness.getInstance(getBaseContext()).Get(new SubItem());
         setListAdapter(new ArrayAdapter<>(SalesOrderItemActivity.this, android.R.layout.simple_list_item_checked, lstSubItems));
-
         ProductSpinnerAdapter adapter = new ProductSpinnerAdapter(getBaseContext(), ProductBussiness.getInstance(getBaseContext()).Get(new Product()));
         adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
         spnSalesOrderitemProducts = findViewById(R.id.spn_salesorderitem_products);
         spnSalesOrderitemProducts.setAdapter(adapter);
-
+        spnSalesOrderitemProducts.setOnItemSelectedListener(SalesOrderItemActivity.this);
         btnsalesOrderitemConfirm = findViewById(R.id.btn_salesorderitem_confirm);
         btnsalesOrderitemConfirm.setOnClickListener(SalesOrderItemActivity.this);
-//        lstMenuCheck.setItemChecked();
         ManageAction();
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+        // your code here
+        if(((Product) spnSalesOrderitemProducts.getSelectedItem()).UsaSubItens)
+        {
+            lstMenuCheck.setVisibility(View.GONE);
+            lstMenuCheck.setVisibility(View.VISIBLE);
+        }else
+        {
+            lstMenuCheck.setVisibility(View.GONE);
+            lstMenuCheck.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parentView) {
+        // your code here
+        lstMenuCheck.setVisibility(View.GONE);
+        lstMenuCheck.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -61,22 +81,21 @@ public class SalesOrderItemActivity extends ListActivity implements View.OnClick
         CheckedTextView item = (CheckedTextView) v;
         SubItem subItem = (SubItem)parent.getItemAtPosition(position);
         subItem.Active = item.isChecked();
-//        Toast.makeText(SalesOrderItemActivity.this, subItem.Description + " checked : " +
-//                subItem.Active, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onClick(View v) {
         if(salesOrderItem == null)
             salesOrderItem = new SalesOrderItem();
-        ArrayList<SubItem> lstSubItemTemp = new ArrayList<>();
-        salesOrderItem.subItemItem.clear();
-        for(SubItem subItem : lstSubItems)
-        {
-            if(subItem.Active)
-                lstSubItemTemp.add(subItem);
-        }
         salesOrderItem.Product = (Product) spnSalesOrderitemProducts.getSelectedItem();
+        salesOrderItem.subItemItem.clear();
+        ArrayList<SubItem> lstSubItemTemp = new ArrayList<>();
+        if(salesOrderItem.Product.UsaSubItens) {
+            for (SubItem subItem : lstSubItems) {
+                if (subItem.Active)
+                    lstSubItemTemp.add(subItem);
+            }
+        }
         salesOrderItem.subItemItem = lstSubItemTemp;
         InputConditions();
     }
@@ -124,7 +143,6 @@ public class SalesOrderItemActivity extends ListActivity implements View.OnClick
         AlertDialog alertToShow = builder.create();
         alertToShow.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         alertToShow.show();
-//        builder.show();
     }
 
 
