@@ -1,5 +1,8 @@
 package com.desenvolvigames.mamaevovo.entities;
 
+import java.util.ArrayList;
+
 public class SalesOrder {
-    public SalesOrderItem SalesOrderItem;
+    public Long Id;
+    public ArrayList<SalesOrderItem> SalesOrderItem;
 }

@@ -22,7 +22,6 @@ public final class Contracts {
 
     public static class SalesOrderEntry implements BaseColumns {
         public static final String TABLE_NAME = "SalesOrder";
-        public static final String COLUMN_NAME_IDSALESORDERITEM = "IdSalesOrderItem";
     }
 
     public static class SalesOrderItemEntry implements BaseColumns {
