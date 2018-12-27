@@ -13,6 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.desenvolvigames.mamaevovo.R;
+import com.desenvolvigames.mamaevovo.bussiness.SalesOrderBussiness;
+import com.desenvolvigames.mamaevovo.entities.SalesOrder;
 import com.desenvolvigames.mamaevovo.entities.SalesOrderItem;
 
 import java.util.ArrayList;
@@ -112,6 +114,39 @@ public class SalesOrderActivity extends ListActivity implements View.OnClickList
 
     @Override
     public void onBackPressed() {
+        if(lstSalesOrderItem.isEmpty()) {
+            FinishActivity();
+        }else
+        {
+            CharSequence options[] = new CharSequence[]{"Sim", "Não", "Cancelar"};
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Deseja concluir este Pedido ?");
+            builder.setItems(options, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which)
+                    {
+                        case 0:
+                            SalesOrder salesOrder = new SalesOrder();
+                            salesOrder.IdDate = 1L;
+                            salesOrder.SalesOrderItem = lstSalesOrderItem;
+                            SalesOrderBussiness.getInstance(SalesOrderActivity.this).Insert(salesOrder);
+                            FinishActivity();
+                            break;
+                        case 1:
+                            FinishActivity();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            });
+            builder.show();
+        }
+    }
+
+    private void FinishActivity()
+    {
         Intent myIntent = new Intent(SalesOrderActivity.this, PrincipalActivitty.class);
         SalesOrderActivity.this.startActivity(myIntent);
         finish();

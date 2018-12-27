@@ -62,6 +62,10 @@ public class SalesOrderDataAccess {
     public SalesOrder Insert(SalesOrder salesOrder){
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
+
+        if(salesOrder.IdDate != null)
+            values.put(Contracts.SalesOrderEntry.COLUMN_NAME_IDDATE, salesOrder.IdDate);
+
         long newRowId = db.insert(Contracts.SalesOrderEntry.TABLE_NAME, null, values);
         db.close();
 

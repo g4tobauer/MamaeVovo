@@ -29,9 +29,15 @@ public class DbHelper extends SQLiteOpenHelper {
                 Contracts.SubItemEntry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE + COMMA_SEP +
                 Contracts.SubItemEntry.COLUMN_NAME_ACTIVE + TEXT_TYPE +
             " )";
+    private static final String SQL_CREATE_SALESORDER = "CREATE TABLE " + Contracts.SalesOrderEntry.TABLE_NAME +
+            " (" +
+                Contracts.SalesOrderEntry._ID + INTEGER_TYPE + " PRIMARY KEY" + COMMA_SEP +
+                Contracts.SalesOrderEntry.COLUMN_NAME_IDDATE + INTEGER_TYPE +
+            " )";
 
     private static final String SQL_DELETE_PRODUCTS = "DROP TABLE IF EXISTS " + Contracts.ProductEntry.TABLE_NAME;
     private static final String SQL_DELETE_MENUS = "DROP TABLE IF EXISTS " + Contracts.SubItemEntry.TABLE_NAME;
+    private static final String SQL_DELETE_SALESORDER = "DROP TABLE IF EXISTS " + Contracts.SalesOrderEntry.TABLE_NAME;
 
 
     public DbHelper(Context context) {
@@ -40,10 +46,12 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_PRODUCTS);
         db.execSQL(SQL_CREATE_SUBITENS);
+        db.execSQL(SQL_CREATE_SALESORDER);
     }
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(SQL_DELETE_PRODUCTS);
         db.execSQL(SQL_DELETE_MENUS);
+        db.execSQL(SQL_DELETE_SALESORDER);
         onCreate(db);
     }
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
