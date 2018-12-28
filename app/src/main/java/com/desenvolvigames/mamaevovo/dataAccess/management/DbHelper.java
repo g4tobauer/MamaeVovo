@@ -34,11 +34,18 @@ public class DbHelper extends SQLiteOpenHelper {
                 Contracts.SalesOrderEntry._ID + INTEGER_TYPE + " PRIMARY KEY" + COMMA_SEP +
                 Contracts.SalesOrderEntry.COLUMN_NAME_IDDATE + INTEGER_TYPE +
             " )";
+    private static final String SQL_CREATE_SALESORDERITEM = "CREATE TABLE " + Contracts.SalesOrderItemEntry.TABLE_NAME +
+            " (" +
+                Contracts.SalesOrderItemEntry._ID + INTEGER_TYPE + " PRIMARY KEY" + COMMA_SEP +
+                Contracts.SalesOrderItemEntry.COLUMN_NAME_IDSALESORDER + INTEGER_TYPE + COMMA_SEP +
+                Contracts.SalesOrderItemEntry.COLUMN_NAME_IDPRODUCT + INTEGER_TYPE + COMMA_SEP +
+                Contracts.SalesOrderItemEntry.COLUMN_NAME_AMOUNT + REAL_TYPE +
+            " )";
 
     private static final String SQL_DELETE_PRODUCTS = "DROP TABLE IF EXISTS " + Contracts.ProductEntry.TABLE_NAME;
     private static final String SQL_DELETE_MENUS = "DROP TABLE IF EXISTS " + Contracts.SubItemEntry.TABLE_NAME;
     private static final String SQL_DELETE_SALESORDER = "DROP TABLE IF EXISTS " + Contracts.SalesOrderEntry.TABLE_NAME;
-
+    private static final String SQL_DELETE_SALESORDERITEM = "DROP TABLE IF EXISTS " + Contracts.SalesOrderItemEntry.TABLE_NAME;
 
     public DbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -47,11 +54,13 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_PRODUCTS);
         db.execSQL(SQL_CREATE_SUBITENS);
         db.execSQL(SQL_CREATE_SALESORDER);
+        db.execSQL(SQL_CREATE_SALESORDERITEM);
     }
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(SQL_DELETE_PRODUCTS);
         db.execSQL(SQL_DELETE_MENUS);
         db.execSQL(SQL_DELETE_SALESORDER);
+        db.execSQL(SQL_DELETE_SALESORDERITEM);
         onCreate(db);
     }
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {

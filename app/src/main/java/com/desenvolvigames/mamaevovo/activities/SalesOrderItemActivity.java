@@ -88,7 +88,7 @@ public class SalesOrderItemActivity extends ListActivity implements View.OnClick
         if(salesOrderItem == null)
             salesOrderItem = new SalesOrderItem();
         salesOrderItem.Product = (Product) spnSalesOrderitemProducts.getSelectedItem();
-        salesOrderItem.subItemItem.clear();
+        salesOrderItem.SubItemItem.clear();
         ArrayList<SubItem> lstSubItemTemp = new ArrayList<>();
         if(salesOrderItem.Product.UsaSubItens) {
             for (SubItem subItem : lstSubItems) {
@@ -96,7 +96,7 @@ public class SalesOrderItemActivity extends ListActivity implements View.OnClick
                     lstSubItemTemp.add(subItem);
             }
         }
-        salesOrderItem.subItemItem = lstSubItemTemp;
+        salesOrderItem.SubItemItem = lstSubItemTemp;
         InputConditions();
     }
 
@@ -174,7 +174,7 @@ public class SalesOrderItemActivity extends ListActivity implements View.OnClick
                     SubItem subItemTemp = (SubItem)lstMenuCheck.getAdapter().getItem(i);
                     subItemTemp.Active = false;
                     lstMenuCheck.setItemChecked(i, subItemTemp.Active);
-                    for(SubItem subItem : salesOrderItem.subItemItem)
+                    for(SubItem subItem : salesOrderItem.SubItemItem)
                     {
                         if(subItem.Id == subItemTemp.Id)
                         {

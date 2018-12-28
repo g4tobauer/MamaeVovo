@@ -7,12 +7,13 @@ import java.util.ArrayList;
 
 public class SalesOrderItem implements Parcelable {
     public Long Id;
+    public Long IdSalesOrder;
     public Product Product;
     public Double Quantidade;
-    public ArrayList<SubItem> subItemItem;
+    public ArrayList<SubItem> SubItemItem;
 
     public SalesOrderItem(){
-        subItemItem = new ArrayList<>();}
+        SubItemItem = new ArrayList<>();}
 
     protected SalesOrderItem(Parcel in) {
         if (in.readByte() == 0) {
@@ -20,15 +21,20 @@ public class SalesOrderItem implements Parcelable {
         } else {
             Id = in.readLong();
         }
+        if (in.readByte() == 0) {
+            IdSalesOrder = null;
+        } else {
+            IdSalesOrder = in.readLong();
+        }
         Product = in.readParcelable(com.desenvolvigames.mamaevovo.entities.Product.class.getClassLoader());
         if (in.readByte() == 0) {
             Quantidade = null;
         } else {
             Quantidade = in.readDouble();
         }
-        subItemItem = in.createTypedArrayList(SubItem.CREATOR);
-        if(subItemItem == null)
-            subItemItem = new ArrayList<>();
+        SubItemItem = in.createTypedArrayList(SubItem.CREATOR);
+        if(SubItemItem == null)
+            SubItemItem = new ArrayList<>();
     }
 
     @Override
@@ -39,6 +45,12 @@ public class SalesOrderItem implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeLong(Id);
         }
+        if (IdSalesOrder == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(IdSalesOrder);
+        }
         dest.writeParcelable(Product, flags);
         if (Quantidade == null) {
             dest.writeByte((byte) 0);
@@ -46,7 +58,7 @@ public class SalesOrderItem implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeDouble(Quantidade);
         }
-        dest.writeTypedList(subItemItem);
+        dest.writeTypedList(SubItemItem);
     }
 
     @Override
