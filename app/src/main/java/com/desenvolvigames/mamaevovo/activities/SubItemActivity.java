@@ -16,7 +16,7 @@ import com.desenvolvigames.mamaevovo.entities.SubItem;
 
 import java.util.ArrayList;
 
-public class SubItemActivity extends CadastreBaseActivity{
+public class SubItemActivity extends CadastreBaseActivity {
 
     private SubItem subItem;
     private EditText edtSubitemDescription;

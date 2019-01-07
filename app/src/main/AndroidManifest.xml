@@ -29,7 +29,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.SubItemActivity" />
         <activity android:name=".activities.SubItemListActivity" />
-        <activity android:name=".activities.CadastreBaseActivity"></activity>
+        <activity android:name=".activities.CadastreBaseActivity" />
+        <activity android:name=".activities.SalesOrderListActivity"></activity>
     </application>
 
 </manifest>

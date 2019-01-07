@@ -20,19 +20,22 @@ import com.desenvolvigames.mamaevovo.entities.SalesOrderItem;
 import java.util.ArrayList;
 
 public class SalesOrderActivity extends ListActivity implements View.OnClickListener, AdapterView.OnItemLongClickListener{
+
+    private SalesOrder salesOrder;
     private FloatingActionButton salesOrderItemAdd;
     private ListView ltvSalesOrderItem;
     private ArrayList<SalesOrderItem> lstSalesOrderItem;
     private SalesOrderItem salesOrderItemOldTemp;
 
-    private static final int INSERT = 1;
-    private static final int UPDATE = 2;
+    public static final String INSERT = "INSERT";
+    public static final String UPDATE = "UPDATE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_salesorder);
         lstSalesOrderItem = new ArrayList<>();
+        InitFields();
         ltvSalesOrderItem = getListView();
         ltvSalesOrderItem.setChoiceMode(ltvSalesOrderItem.CHOICE_MODE_SINGLE);
         ltvSalesOrderItem.setTextFilterEnabled(true);
@@ -48,8 +51,8 @@ public class SalesOrderActivity extends ListActivity implements View.OnClickList
         salesOrderItemOldTemp = (SalesOrderItem)parent.getItemAtPosition(position);
         Intent myIntent = new Intent(SalesOrderActivity.this, SalesOrderItemActivity.class);
         myIntent.putExtra("key", salesOrderItemOldTemp);
-        myIntent.setAction("UPDATE");
-        SalesOrderActivity.this.startActivityForResult(myIntent, UPDATE);
+        myIntent.setAction(UPDATE);
+        SalesOrderActivity.this.startActivityForResult(myIntent, 2);
     }
 
     @Override
@@ -60,7 +63,7 @@ public class SalesOrderActivity extends ListActivity implements View.OnClickList
             SalesOrderItem salesOrderItem;
             switch (requestCode)
             {
-                case INSERT:
+                case 1:
                     salesOrderItem = data.getParcelableExtra("result");
                     if(lstSalesOrderItem.size() == 0) salesOrderItem.Id = 0L;
                     else
@@ -70,7 +73,7 @@ public class SalesOrderActivity extends ListActivity implements View.OnClickList
                     }
                     lstSalesOrderItem.add(salesOrderItem);
                     break;
-                case UPDATE:
+                case 2:
                     salesOrderItem = data.getParcelableExtra("result");
                     lstSalesOrderItem.set(lstSalesOrderItem.indexOf(salesOrderItemOldTemp), salesOrderItem);
                     salesOrderItemOldTemp = null;
@@ -87,8 +90,8 @@ public class SalesOrderActivity extends ListActivity implements View.OnClickList
     @Override
     public void onClick(View v){
         Intent myIntent = new Intent(SalesOrderActivity.this, SalesOrderItemActivity.class);
-        myIntent.setAction("INSERT");
-        SalesOrderActivity.this.startActivityForResult(myIntent, INSERT);
+        myIntent.setAction(INSERT);
+        SalesOrderActivity.this.startActivityForResult(myIntent, 1);
     }
 
     @Override
@@ -127,7 +130,7 @@ public class SalesOrderActivity extends ListActivity implements View.OnClickList
                     switch (which)
                     {
                         case 0:
-                            SalesOrder salesOrder = new SalesOrder();
+                            salesOrder = new SalesOrder();
                             salesOrder.IdDate = 1L;
                             salesOrder.SalesOrderItem = lstSalesOrderItem;
                             SalesOrderBussiness.getInstance(SalesOrderActivity.this).Insert(salesOrder);
@@ -145,8 +148,21 @@ public class SalesOrderActivity extends ListActivity implements View.OnClickList
         }
     }
 
-    private void FinishActivity()
+    private void InitFields()
     {
+        switch(getIntent().getAction())
+        {
+            case INSERT:
+                salesOrder = new SalesOrder();
+                break;
+            case UPDATE:
+                salesOrder  = getIntent().getParcelableExtra("key"); //if it's a string you stored.
+                lstSalesOrderItem.addAll(salesOrder.SalesOrderItem);
+                break;
+        }
+    }
+
+    private void FinishActivity(){
         Intent myIntent = new Intent(SalesOrderActivity.this, PrincipalActivitty.class);
         SalesOrderActivity.this.startActivity(myIntent);
         finish();

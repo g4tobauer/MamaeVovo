@@ -23,7 +23,9 @@
     <string name="product_delete_ok">Produto deletado!</string>
     <string name="product_delete_fail">Produto não deletado!</string>
 
-    <string name="salesorder_list_title">Pedido</string>
+    <string name="salesorder_list_title">Pedidos</string>
+
+    <string name="salesorder_title">Pedido</string>
 
     <string name="subitem_list_title">SubItens</string>
 
