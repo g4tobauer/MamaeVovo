@@ -33,8 +33,7 @@ public class PrincipalActivitty extends AppCompatActivity implements View.OnClic
     }
 
     @Override
-    public void onClick(View v)
-    {
+    public void onClick(View v) {
         Intent myIntent;
         switch (v.getId())
         {
@@ -52,7 +51,7 @@ public class PrincipalActivitty extends AppCompatActivity implements View.OnClic
                 }
                 break;
             case R.id.btn_principal_salesorder:
-                myIntent = new Intent(PrincipalActivitty.this, SalesOrderActivity.class);
+                myIntent = new Intent(PrincipalActivitty.this, SalesOrderListActivity.class);
                 PrincipalActivitty.this.startActivity(myIntent);
                 break;
             case R.id.btn_principal_subitem:

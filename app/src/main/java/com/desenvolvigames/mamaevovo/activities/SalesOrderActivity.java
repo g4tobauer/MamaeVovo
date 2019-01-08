@@ -130,10 +130,17 @@ public class SalesOrderActivity extends ListActivity implements View.OnClickList
                     switch (which)
                     {
                         case 0:
-                            salesOrder = new SalesOrder();
-                            salesOrder.IdDate = 1L;
-                            salesOrder.SalesOrderItem = lstSalesOrderItem;
-                            SalesOrderBussiness.getInstance(SalesOrderActivity.this).Insert(salesOrder);
+                            switch(getIntent().getAction())
+                            {
+                                case INSERT:
+                                    salesOrder.IdDate = 1L;
+                                    salesOrder.SalesOrderItem = lstSalesOrderItem;
+                                    SalesOrderBussiness.getInstance(SalesOrderActivity.this).Insert(salesOrder);
+                                    break;
+                                case UPDATE:
+                                    SalesOrderBussiness.getInstance(SalesOrderActivity.this).Update(salesOrder);
+                                    break;
+                            }
                             FinishActivity();
                             break;
                         case 1:
@@ -148,8 +155,7 @@ public class SalesOrderActivity extends ListActivity implements View.OnClickList
         }
     }
 
-    private void InitFields()
-    {
+    private void InitFields() {
         switch(getIntent().getAction())
         {
             case INSERT:
@@ -163,7 +169,7 @@ public class SalesOrderActivity extends ListActivity implements View.OnClickList
     }
 
     private void FinishActivity(){
-        Intent myIntent = new Intent(SalesOrderActivity.this, PrincipalActivitty.class);
+        Intent myIntent = new Intent(SalesOrderActivity.this, SalesOrderListActivity.class);
         SalesOrderActivity.this.startActivity(myIntent);
         finish();
     }

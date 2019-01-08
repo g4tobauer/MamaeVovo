@@ -71,6 +71,8 @@ public class SalesOrderItemDataAccess {
             // The Cursor is now set to the right position
             SalesOrderItem newProd = new SalesOrderItem();
             newProd.Id = cursor.getLong(cursor.getColumnIndexOrThrow(Contracts.SalesOrderItemEntry._ID));
+            newProd.IdSalesOrder = cursor.getLong(cursor.getColumnIndexOrThrow(Contracts.SalesOrderItemEntry.COLUMN_NAME_IDSALESORDER));
+            newProd.Quantidade = cursor.getDouble(cursor.getColumnIndexOrThrow(Contracts.SalesOrderItemEntry.COLUMN_NAME_AMOUNT));
             mArrayList.add(newProd);
         }
         db.close();

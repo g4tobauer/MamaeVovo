@@ -59,4 +59,14 @@ public class SalesOrder implements Parcelable {
         }
         dest.writeTypedList(SalesOrderItem);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sbResult = new StringBuilder();
+        double valorTotal = 0;
+        for(SalesOrderItem salesOrderItem : SalesOrderItem)
+            valorTotal += salesOrderItem.Quantidade * salesOrderItem.Product.Price;
+        sbResult.append(valorTotal);
+        return sbResult.toString();
+    }
 }
