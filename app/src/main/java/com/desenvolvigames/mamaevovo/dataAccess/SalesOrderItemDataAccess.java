@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.desenvolvigames.mamaevovo.dataAccess.management.Contracts;
 import com.desenvolvigames.mamaevovo.dataAccess.management.DbHelper;
+import com.desenvolvigames.mamaevovo.entities.Product;
 import com.desenvolvigames.mamaevovo.entities.SalesOrderItem;
 
 import java.util.ArrayList;
@@ -73,6 +74,7 @@ public class SalesOrderItemDataAccess {
             newProd.Id = cursor.getLong(cursor.getColumnIndexOrThrow(Contracts.SalesOrderItemEntry._ID));
             newProd.IdSalesOrder = cursor.getLong(cursor.getColumnIndexOrThrow(Contracts.SalesOrderItemEntry.COLUMN_NAME_IDSALESORDER));
             newProd.Quantidade = cursor.getDouble(cursor.getColumnIndexOrThrow(Contracts.SalesOrderItemEntry.COLUMN_NAME_AMOUNT));
+            newProd.Product = new Product(cursor.getLong(cursor.getColumnIndexOrThrow(Contracts.SalesOrderItemEntry.COLUMN_NAME_IDPRODUCT)));
             mArrayList.add(newProd);
         }
         db.close();

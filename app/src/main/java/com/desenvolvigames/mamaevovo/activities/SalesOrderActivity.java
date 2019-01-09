@@ -138,6 +138,8 @@ public class SalesOrderActivity extends ListActivity implements View.OnClickList
                                     SalesOrderBussiness.getInstance(SalesOrderActivity.this).Insert(salesOrder);
                                     break;
                                 case UPDATE:
+                                    salesOrder.IdDate = 1L;
+                                    salesOrder.SalesOrderItem = lstSalesOrderItem;
                                     SalesOrderBussiness.getInstance(SalesOrderActivity.this).Update(salesOrder);
                                     break;
                             }

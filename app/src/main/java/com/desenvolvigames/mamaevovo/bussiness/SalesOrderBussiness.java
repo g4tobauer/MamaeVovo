@@ -34,7 +34,7 @@ public class SalesOrderBussiness {
         {
             SalesOrderItem salesOrderItem = new SalesOrderItem();
             salesOrderItem.IdSalesOrder = salesOrderTemp.Id;
-            ArrayList<SalesOrderItem> lstSalesOrderItem = SalesOrderItemDataAccess.getInstance(mContext).Get(salesOrderItem);
+            ArrayList<SalesOrderItem> lstSalesOrderItem = SalesOrderItemBussiness.getInstance(mContext).Get(salesOrderItem);
             salesOrderTemp.SalesOrderItem = lstSalesOrderItem;
         }
         return lstSalesOrder;

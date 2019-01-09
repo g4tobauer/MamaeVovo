@@ -16,6 +16,10 @@ public class Product implements Parcelable
 
     public Product(){}
 
+    public Product(Long Id){
+        this.Id = Id;
+    }
+
     protected Product(Parcel in) {
         if (in.readByte() == 0) {
             Id = null;

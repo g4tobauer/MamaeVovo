@@ -82,6 +82,10 @@ public class SalesOrderDataAccess {
     public boolean Update(SalesOrder salesOrder){
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
+
+        if(salesOrder.IdDate != null)
+            values.put(Contracts.SalesOrderEntry.COLUMN_NAME_IDDATE, salesOrder.IdDate);
+
         String selection = Contracts.SalesOrderEntry._ID + " = ?";
         String[] selectionArgs = { salesOrder.Id.toString() };
         int count = db.update(
