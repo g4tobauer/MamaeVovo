@@ -8,8 +8,10 @@ import android.widget.Button;
 
 import com.desenvolvigames.mamaevovo.R;
 import com.desenvolvigames.mamaevovo.bussiness.ProductBussiness;
+import com.desenvolvigames.mamaevovo.bussiness.SalesOrderBussiness;
 import com.desenvolvigames.mamaevovo.bussiness.SubItemBussiness;
 import com.desenvolvigames.mamaevovo.entities.Product;
+import com.desenvolvigames.mamaevovo.entities.SalesOrder;
 import com.desenvolvigames.mamaevovo.entities.SubItem;
 
 import java.util.ArrayList;
@@ -51,8 +53,18 @@ public class PrincipalActivitty extends AppCompatActivity implements View.OnClic
                 }
                 break;
             case R.id.btn_principal_salesorder:
-                myIntent = new Intent(PrincipalActivitty.this, SalesOrderListActivity.class);
-                PrincipalActivitty.this.startActivity(myIntent);
+
+                ArrayList<SalesOrder> lstSalesOrder = SalesOrderBussiness.getInstance(getBaseContext()).Get(new SalesOrder());
+                if(lstSalesOrder.isEmpty()) {
+                    myIntent = new Intent(PrincipalActivitty.this, SalesOrderActivity.class);
+                    myIntent.setAction(ProductActivity.INSERT);
+                    PrincipalActivitty.this.startActivity(myIntent);
+                }else
+                {
+                    myIntent = new Intent(PrincipalActivitty.this, SalesOrderListActivity.class);
+                    myIntent.putParcelableArrayListExtra("key", lstSalesOrder);
+                    PrincipalActivitty.this.startActivity(myIntent);
+                }
                 break;
             case R.id.btn_principal_subitem:
                 ArrayList<SubItem> lstSubItem = SubItemBussiness.getInstance(getBaseContext()).Get(new SubItem());

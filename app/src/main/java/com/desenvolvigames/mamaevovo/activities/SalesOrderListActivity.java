@@ -1,9 +1,11 @@
 package com.desenvolvigames.mamaevovo.activities;
 
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,8 +25,8 @@ public class SalesOrderListActivity extends ListActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sales_order_list);
-        lstSalesOrder = new ArrayList<>();
-        lstSalesOrder.addAll(SalesOrderBussiness.getInstance(getApplicationContext()).Get(new SalesOrder()));
+        Intent myIntent = getIntent();
+        lstSalesOrder = myIntent.getParcelableArrayListExtra("key");
         ltvSalesOrder = getListView();
         ltvSalesOrder.setChoiceMode(ltvSalesOrder.CHOICE_MODE_SINGLE);
         ltvSalesOrder.setTextFilterEnabled(true);
@@ -52,8 +54,26 @@ public class SalesOrderListActivity extends ListActivity implements View.OnClick
     }
 
     @Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        return false;
+    public boolean onItemLongClick(AdapterView<?> arg0, View arg1,int pos, long id) {
+        final SalesOrder salesOrder = (SalesOrder)arg0.getItemAtPosition(pos);
+
+        CharSequence options[] = new CharSequence[]{"Sim", "Não"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Deseja deletar o pedido " + salesOrder + " ?");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == 0) {
+                    if(SalesOrderBussiness.getInstance(getBaseContext()).Delete(salesOrder)) {
+                        lstSalesOrder.remove(salesOrder);
+                        ((ArrayAdapter) ltvSalesOrder.getAdapter()).notifyDataSetChanged();
+                    }
+                }
+            }
+        });
+        builder.show();
+        return true;
     }
 
     @Override
