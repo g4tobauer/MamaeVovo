@@ -14,13 +14,13 @@ import android.widget.ListView;
 
 import com.desenvolvigames.mamaevovo.R;
 import com.desenvolvigames.mamaevovo.bussiness.SalesOrderBussiness;
-import com.desenvolvigames.mamaevovo.bussiness.SalesOrderItemBussiness;
 import com.desenvolvigames.mamaevovo.entities.SalesOrder;
 import com.desenvolvigames.mamaevovo.entities.SalesOrderItem;
 
 import java.util.ArrayList;
 
 public class SalesOrderActivity extends ListActivity implements View.OnClickListener, AdapterView.OnItemLongClickListener{
+
 
     private SalesOrder salesOrder;
     private FloatingActionButton salesOrderItemAdd;
@@ -140,24 +140,6 @@ public class SalesOrderActivity extends ListActivity implements View.OnClickList
                                     break;
                                 case UPDATE:
                                     salesOrder.IdDate = 1L;
-                                    ArrayList<SalesOrderItem> lstRemovedSalesOrderItem = new ArrayList<>();
-                                    lstRemovedSalesOrderItem.addAll(salesOrder.SalesOrderItem);
-                                    for(SalesOrderItem salesOrderItemTemp1 : lstSalesOrderItem)
-                                    {
-                                        for(SalesOrderItem salesOrderItemTemp2 : salesOrder.SalesOrderItem)
-                                        {
-                                            if(salesOrderItemTemp1.Id == salesOrderItemTemp2.Id)
-                                            {
-                                                lstRemovedSalesOrderItem.remove(salesOrderItemTemp2);
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    //falta manipular aqui pra inserir, eu eu axo que é melhor fazer essa manipulacao na bussines
-                                    for(SalesOrderItem salesOrderItemDeleteTemp : lstRemovedSalesOrderItem)
-                                    {
-                                        SalesOrderItemBussiness.getInstance(getBaseContext()).Delete(salesOrderItemDeleteTemp);
-                                    }
                                     salesOrder.SalesOrderItem = lstSalesOrderItem;
                                     SalesOrderBussiness.getInstance(SalesOrderActivity.this).Update(salesOrder);
                                     break;

@@ -8,6 +8,7 @@ import com.desenvolvigames.mamaevovo.entities.SalesOrder;
 import com.desenvolvigames.mamaevovo.entities.SalesOrderItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SalesOrderBussiness {
 
@@ -55,9 +56,15 @@ public class SalesOrderBussiness {
     public boolean Update(SalesOrder salesOrder){
         boolean result;
         result = SalesOrderDataAccess.getInstance(mContext).Update(salesOrder);
-        if(result) {
-            for (SalesOrderItem salesOrderItemTemp : salesOrder.SalesOrderItem) {
-                if (!SalesOrderItemBussiness.getInstance(mContext).Update(salesOrderItemTemp)) {
+        if(result)
+        {
+            SalesOrderItem salesOrderItem = new SalesOrderItem();
+            salesOrderItem.IdSalesOrder = salesOrder.Id;
+            List<SalesOrderItem> lstSalesOrderItem = SalesOrderItemBussiness.getInstance(mContext).Get(salesOrderItem);
+            for (SalesOrderItem salesOrderItemTemp : salesOrder.SalesOrderItem)
+            {
+                if (!SalesOrderItemBussiness.getInstance(mContext).Update(salesOrderItemTemp))
+                {
                     result = false;
                     break;
                 }
