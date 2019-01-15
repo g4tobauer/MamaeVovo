@@ -66,12 +66,6 @@ public class SalesOrderActivity extends ListActivity implements View.OnClickList
             {
                 case 1:
                     salesOrderItem = data.getParcelableExtra("result");
-                    if(lstSalesOrderItem.size() == 0) salesOrderItem.Id = 0L;
-                    else
-                    {
-                        Long id = lstSalesOrderItem.get(lstSalesOrderItem.size()-1).Id;
-                        salesOrderItem.Id = id+1;
-                    }
                     lstSalesOrderItem.add(salesOrderItem);
                     break;
                 case 2:

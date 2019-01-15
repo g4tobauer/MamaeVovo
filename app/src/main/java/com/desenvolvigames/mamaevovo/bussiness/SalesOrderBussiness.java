@@ -63,10 +63,21 @@ public class SalesOrderBussiness {
             List<SalesOrderItem> lstSalesOrderItem = SalesOrderItemBussiness.getInstance(mContext).Get(salesOrderItem);
             for (SalesOrderItem salesOrderItemTemp : salesOrder.SalesOrderItem)
             {
-                if (!SalesOrderItemBussiness.getInstance(mContext).Update(salesOrderItemTemp))
+                if(salesOrderItemTemp.Id == null)
                 {
-                    result = false;
-                    break;
+                    if(SalesOrderItemBussiness.getInstance(mContext).Insert(salesOrderItemTemp) == null)
+                    {
+                        result = false;
+                        break;
+                    }
+                }
+                else
+                {
+                    if (!SalesOrderItemBussiness.getInstance(mContext).Update(salesOrderItemTemp))
+                    {
+                        result = false;
+                        break;
+                    }
                 }
             }
         }
