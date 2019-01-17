@@ -65,6 +65,7 @@ public class SalesOrderBussiness {
             {
                 if(salesOrderItemTemp.Id == null)
                 {
+                    salesOrderItemTemp.IdSalesOrder = salesOrder.Id;
                     if(SalesOrderItemBussiness.getInstance(mContext).Insert(salesOrderItemTemp) == null)
                     {
                         result = false;
@@ -73,8 +74,29 @@ public class SalesOrderBussiness {
                 }
                 else
                 {
-                    if (!SalesOrderItemBussiness.getInstance(mContext).Update(salesOrderItemTemp))
+                    if (SalesOrderItemBussiness.getInstance(mContext).Update(salesOrderItemTemp))
                     {
+                        SalesOrderItem salesOrderItemDel = null;
+                        for(SalesOrderItem salesOrderItemDelTemp : lstSalesOrderItem)
+                        {
+                            if(salesOrderItemTemp.Id == salesOrderItemDelTemp.Id)
+                            {
+                                salesOrderItemDel = salesOrderItemDelTemp;
+                                break;
+                            }
+                        }
+                        lstSalesOrderItem.remove(salesOrderItemDel);
+                    }else
+                    {
+                        result = false;
+                        break;
+                    }
+                }
+            }
+            if(result)
+            {
+                for (SalesOrderItem salesOrderItemDelTemp : lstSalesOrderItem) {
+                    if (!SalesOrderItemBussiness.getInstance(mContext).Delete(salesOrderItemDelTemp)) {
                         result = false;
                         break;
                     }
