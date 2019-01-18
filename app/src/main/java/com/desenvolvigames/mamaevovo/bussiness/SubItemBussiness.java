@@ -14,8 +14,7 @@ public class SubItemBussiness {
 
     private SubItemBussiness(){}
 
-    public static SubItemBussiness getInstance(Context context)
-    {
+    public static SubItemBussiness getInstance(Context context){
         if(mInstance==null)
             mInstance = new SubItemBussiness();
         mInstance.SaveContext(context);
@@ -27,23 +26,19 @@ public class SubItemBussiness {
         mContext = context;
     }
 
-    public ArrayList<SubItem> Get(SubItem subItem)
-    {
+    public ArrayList<SubItem> Get(SubItem subItem){
         return SubItemDataAccess.getInstance(mContext).Get(subItem);
     }
 
-    public SubItem Insert(SubItem subItem)
-    {
+    public SubItem Insert(SubItem subItem){
         return SubItemDataAccess.getInstance(mContext).Insert(subItem);
     }
 
-    public boolean Update(SubItem subItem)
-    {
+    public boolean Update(SubItem subItem){
         return SubItemDataAccess.getInstance(mContext).Update(subItem);
     }
 
-    public boolean Delete(SubItem subItem)
-    {
+    public boolean Delete(SubItem subItem){
         return SubItemDataAccess.getInstance(mContext).Delete(subItem);
     }
 }

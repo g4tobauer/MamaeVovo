@@ -33,8 +33,9 @@ public final class Contracts {
     }
 
     public static class SalesOrderSubItemByItemEntry implements BaseColumns {
-        public static final String TABLE_NAME = "SalesOrderSubItemByItem";
+        public static final String TABLE_NAME = "SalesOrderSubItemByItemDataAccess";
         public static final String COLUMN_NAME_IDSALESORDER = "IdSalesOrder";
         public static final String COLUMN_NAME_IDSALESORDERITEM = "IdSalesOrderItem";
+        public static final String COLUMN_NAME_IDSUBITEM = "IdSubItem";
     }
 }

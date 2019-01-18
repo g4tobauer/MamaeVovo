@@ -18,8 +18,7 @@ public class ProductDataAccess {
 
     private ProductDataAccess(){}
 
-    public static ProductDataAccess getInstance(Context context)
-    {
+    public static ProductDataAccess getInstance(Context context){
         if(mInstance==null)
             mInstance = new ProductDataAccess();
         mInstance.CreateHelper(context);
@@ -31,8 +30,7 @@ public class ProductDataAccess {
         mDbHelper = new DbHelper(context);
     }
 
-    public ArrayList<Product> Get(Product product)
-    {
+    public ArrayList<Product> Get(Product product){
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
         StringBuilder sbSelection = new StringBuilder();
         ArrayList<String> arSelectionArgs = new ArrayList<>();
@@ -102,8 +100,7 @@ public class ProductDataAccess {
         return mArrayList;
     }
 
-    public Product Insert(Product product)
-    {
+    public Product Insert(Product product){
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -131,8 +128,7 @@ public class ProductDataAccess {
         return result;
     }
 
-    public boolean Update(Product product)
-    {
+    public boolean Update(Product product){
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -158,8 +154,7 @@ public class ProductDataAccess {
         return (!(count == 0));
     }
 
-    public boolean Delete(Product product)
-    {
+    public boolean Delete(Product product){
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         String[] selectionArgs = new String[1];
         String selection = null;

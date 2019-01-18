@@ -13,8 +13,7 @@ public class ProductBussiness {
 
     private ProductBussiness(){}
 
-    public static ProductBussiness getInstance(Context context)
-    {
+    public static ProductBussiness getInstance(Context context){
         if(mInstance==null)
             mInstance = new ProductBussiness();
         mInstance.SaveContext(context);
@@ -26,25 +25,21 @@ public class ProductBussiness {
         mContext = context;
     }
 
-    public ArrayList<Product> Get(Product product)
-    {
+    public ArrayList<Product> Get(Product product){
         return ProductDataAccess.getInstance(mContext).Get(product);
     }
 
-    public Product Insert(Product product)
-    {
+    public Product Insert(Product product){
         product.Price = Double.parseDouble(product.Price.toString().replace(",", "."));
         return ProductDataAccess.getInstance(mContext).Insert(product);
     }
 
-    public boolean Update(Product product)
-    {
+    public boolean Update(Product product){
         product.Price = Double.parseDouble(product.Price.toString().replace(",", "."));
         return ProductDataAccess.getInstance(mContext).Update(product);
     }
 
-    public boolean Delete(Product product)
-    {
+    public boolean Delete(Product product){
         return ProductDataAccess.getInstance(mContext).Delete(product);
     }
 }
