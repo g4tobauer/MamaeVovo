@@ -42,16 +42,19 @@ public class SalesOrderItemDataAccess {
         }
         if(!(salesOrder.IdSalesOrder == null))
         {
+            if(sbSelection.length() > 0) sbSelection.append(" AND ");
             sbSelection.append(Contracts.SalesOrderItemEntry.COLUMN_NAME_IDSALESORDER + " = ?");
             arSelectionArgs.add(salesOrder.IdSalesOrder.toString());
         }
         if(!(salesOrder.Product == null))
         {
+            if(sbSelection.length() > 0) sbSelection.append(" AND ");
             sbSelection.append(Contracts.SalesOrderItemEntry.COLUMN_NAME_IDPRODUCT + " = ?");
             arSelectionArgs.add(salesOrder.Product.Id.toString());
         }
         if(!(salesOrder.Quantidade == null))
         {
+            if(sbSelection.length() > 0) sbSelection.append(" AND ");
             sbSelection.append(Contracts.SalesOrderItemEntry.COLUMN_NAME_AMOUNT + " = ?");
             arSelectionArgs.add(salesOrder.Quantidade.toString());
         }

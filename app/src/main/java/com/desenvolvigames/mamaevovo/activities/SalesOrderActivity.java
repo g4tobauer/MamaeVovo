@@ -113,7 +113,33 @@ public class SalesOrderActivity extends ListActivity implements View.OnClickList
     @Override
     public void onBackPressed() {
         if(lstSalesOrderItem.isEmpty()) {
-            FinishActivity();
+
+            CharSequence options[] = new CharSequence[]{"Sim", "Não"};
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Deseja cancelar este Pedido ?");
+            builder.setItems(options, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which)
+                    {
+                        case 0:
+                            switch (getIntent().getAction())
+                            {
+                                case UPDATE:
+                                    SalesOrder deleteSalesOrder = new SalesOrder();
+                                    deleteSalesOrder.Id = salesOrder.Id;
+                                    deleteSalesOrder.SalesOrderItem = lstSalesOrderItem;
+                                    if(SalesOrderBussiness.getInstance(SalesOrderActivity.this).Delete(deleteSalesOrder))
+                                        FinishActivity();
+                                    break;
+                                default:
+                                    FinishActivity();
+                                    break;
+                            }
+                    }
+                }
+            });
+            builder.show();
         }else
         {
             CharSequence options[] = new CharSequence[]{"Sim", "Não", "Cancelar"};

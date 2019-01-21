@@ -42,16 +42,19 @@ public class SalesOrderSubItemByItemDataAccess {
         }
         if(!(salesOrderSubItemByItem.IdSalesOrder == null))
         {
+            if(sbSelection.length() > 0) sbSelection.append(" AND ");
             sbSelection.append(Contracts.SalesOrderSubItemByItemEntry.COLUMN_NAME_IDSALESORDER + " = ?");
             arSelectionArgs.add(salesOrderSubItemByItem.IdSalesOrder.toString());
         }
         if(!(salesOrderSubItemByItem.IdSalesOrderItem == null))
         {
+            if(sbSelection.length() > 0) sbSelection.append(" AND ");
             sbSelection.append(Contracts.SalesOrderSubItemByItemEntry.COLUMN_NAME_IDSALESORDERITEM + " = ?");
             arSelectionArgs.add(salesOrderSubItemByItem.IdSalesOrderItem.toString());
         }
         if(!(salesOrderSubItemByItem.IdSubItem == null))
         {
+            if(sbSelection.length() > 0) sbSelection.append(" AND ");
             sbSelection.append(Contracts.SalesOrderSubItemByItemEntry.COLUMN_NAME_IDSUBITEM + " = ?");
             arSelectionArgs.add(salesOrderSubItemByItem.IdSubItem.toString());
         }
