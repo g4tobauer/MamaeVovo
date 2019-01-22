@@ -178,7 +178,7 @@ public class SalesOrderItemActivity extends ListActivity implements View.OnClick
                     {
                         if(subItem.Id == subItemTemp.Id)
                         {
-                            subItemTemp.Active = subItem.Active;
+                            subItemTemp.Active = true;
                             lstMenuCheck.setItemChecked(i, subItemTemp.Active);
                             break;
                         }
