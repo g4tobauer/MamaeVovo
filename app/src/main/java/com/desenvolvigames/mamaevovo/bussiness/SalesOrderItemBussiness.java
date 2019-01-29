@@ -9,6 +9,7 @@ import com.desenvolvigames.mamaevovo.entities.SalesOrderSubItemByItem;
 import com.desenvolvigames.mamaevovo.entities.SubItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SalesOrderItemBussiness {
 
@@ -72,7 +73,62 @@ public class SalesOrderItemBussiness {
     }
 
     public boolean Update(SalesOrderItem salesOrderItem){
-        return SalesOrderItemDataAccess.getInstance(mContext).Update(salesOrderItem);
+        boolean result;
+        result = SalesOrderItemDataAccess.getInstance(mContext).Update(salesOrderItem);
+        if(result)
+        {
+            SalesOrderSubItemByItem salesOrderSubItemByItem = new SalesOrderSubItemByItem();
+            salesOrderSubItemByItem.IdSalesOrder = salesOrderItem.IdSalesOrder;
+            salesOrderSubItemByItem.IdSalesOrderItem = salesOrderItem.Id;
+
+            List<SalesOrderSubItemByItem> lstSalesOrderSubItemByItem = SalesOrderSubItemByItemBussiness.getInstance(mContext).Get(salesOrderSubItemByItem);
+            for (SubItem subItem : salesOrderItem.SubItemItem)
+            {
+                SalesOrderSubItemByItem salesOrderSubItemByItemNew = new SalesOrderSubItemByItem();
+                salesOrderSubItemByItemNew.IdSalesOrder = salesOrderItem.IdSalesOrder;
+                salesOrderSubItemByItemNew.IdSalesOrderItem = salesOrderItem.Id;
+                salesOrderSubItemByItemNew.Id = subItem.Id;
+
+//                if(salesOrderSubItemByItemNew.Id == null)
+//                {
+//                    if(SalesOrderSubItemByItemBussiness.getInstance(mContext).Insert(salesOrderSubItemByItemNew) == null)
+//                    {
+//                        result = false;
+//                        break;
+//                    }
+//                }
+//                else
+//                {
+//                    if (SalesOrderSubItemByItemBussiness.getInstance(mContext).Update(salesOrderSubItemByItemNew))
+//                    {
+//                        SalesOrderSubItemByItem salesOrderSubItemByItemDel = null;
+//                        for(SalesOrderSubItemByItem SalesOrderSubItemByItemTemp : lstSalesOrderSubItemByItem)
+//                        {
+//                            if(subItem.Id == SalesOrderSubItemByItemTemp.Id)
+//                            {
+//                                salesOrderSubItemByItemDel = SalesOrderSubItemByItemTemp;
+//                                break;
+//                            }
+//                        }
+//                        lstSalesOrderSubItemByItem.remove(salesOrderSubItemByItemDel);
+//                    }else
+//                    {
+//                        result = false;
+//                        break;
+//                    }
+//                }
+            }
+//            if(result)
+//            {
+//                for (SalesOrderSubItemByItem SalesOrderSubItemByItemDelTemp : lstSalesOrderSubItemByItem) {
+//                    if (!SalesOrderSubItemByItemBussiness.getInstance(mContext).Delete(SalesOrderSubItemByItemDelTemp)) {
+//                        result = false;
+//                        break;
+//                    }
+//                }
+//            }
+        }
+        return result;
     }
 
     public boolean Delete(SalesOrderItem salesOrderItem){
