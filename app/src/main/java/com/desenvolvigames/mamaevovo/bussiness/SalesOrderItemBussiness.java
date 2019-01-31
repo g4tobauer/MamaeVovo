@@ -81,52 +81,42 @@ public class SalesOrderItemBussiness {
             salesOrderSubItemByItem.IdSalesOrder = salesOrderItem.IdSalesOrder;
             salesOrderSubItemByItem.IdSalesOrderItem = salesOrderItem.Id;
 
-            List<SalesOrderSubItemByItem> lstSalesOrderSubItemByItem = SalesOrderSubItemByItemBussiness.getInstance(mContext).Get(salesOrderSubItemByItem);
-            for (SubItem subItem : salesOrderItem.SubItemItem)
-            {
-                SalesOrderSubItemByItem salesOrderSubItemByItemNew = new SalesOrderSubItemByItem();
-                salesOrderSubItemByItemNew.IdSalesOrder = salesOrderItem.IdSalesOrder;
-                salesOrderSubItemByItemNew.IdSalesOrderItem = salesOrderItem.Id;
-                salesOrderSubItemByItemNew.Id = subItem.Id;
+            ArrayList<SubItem> lstSubItemTemp = new ArrayList<>();
+            lstSubItemTemp.addAll(salesOrderItem.SubItemItem);
 
-//                if(salesOrderSubItemByItemNew.Id == null)
-//                {
-//                    if(SalesOrderSubItemByItemBussiness.getInstance(mContext).Insert(salesOrderSubItemByItemNew) == null)
-//                    {
-//                        result = false;
-//                        break;
-//                    }
-//                }
-//                else
-//                {
-//                    if (SalesOrderSubItemByItemBussiness.getInstance(mContext).Update(salesOrderSubItemByItemNew))
-//                    {
-//                        SalesOrderSubItemByItem salesOrderSubItemByItemDel = null;
-//                        for(SalesOrderSubItemByItem SalesOrderSubItemByItemTemp : lstSalesOrderSubItemByItem)
-//                        {
-//                            if(subItem.Id == SalesOrderSubItemByItemTemp.Id)
-//                            {
-//                                salesOrderSubItemByItemDel = SalesOrderSubItemByItemTemp;
-//                                break;
-//                            }
-//                        }
-//                        lstSalesOrderSubItemByItem.remove(salesOrderSubItemByItemDel);
-//                    }else
-//                    {
-//                        result = false;
-//                        break;
-//                    }
-//                }
+            List<SalesOrderSubItemByItem> lstSalesOrderSubItemByItem = SalesOrderSubItemByItemBussiness.getInstance(mContext).Get(salesOrderSubItemByItem);
+            for (SubItem subItemTemp : salesOrderItem.SubItemItem) {
+                for (SalesOrderSubItemByItem salesOrderSubItemByItemTemp : lstSalesOrderSubItemByItem)
+                {
+                    if (subItemTemp.Id == salesOrderSubItemByItemTemp.IdSubItem) {
+                        lstSubItemTemp.remove(subItemTemp);
+                        break;
+                    }
+                }
             }
-//            if(result)
-//            {
-//                for (SalesOrderSubItemByItem SalesOrderSubItemByItemDelTemp : lstSalesOrderSubItemByItem) {
-//                    if (!SalesOrderSubItemByItemBussiness.getInstance(mContext).Delete(SalesOrderSubItemByItemDelTemp)) {
-//                        result = false;
-//                        break;
-//                    }
-//                }
-//            }
+            for(SubItem subItemTemp : lstSubItemTemp)
+            {
+                salesOrderSubItemByItem.IdSubItem = subItemTemp.Id;
+                salesOrderSubItemByItem = SalesOrderSubItemByItemBussiness.getInstance(mContext).Insert(salesOrderSubItemByItem);
+                if(salesOrderSubItemByItem == null) return false;
+                lstSalesOrderSubItemByItem.add(salesOrderSubItemByItem);
+            }
+            for(SubItem subItemTemp : salesOrderItem.SubItemItem)
+            {
+                for (SalesOrderSubItemByItem salesOrderSubItemByItemTemp : lstSalesOrderSubItemByItem)
+                {
+                    if(subItemTemp.Id == salesOrderSubItemByItemTemp.IdSubItem)
+                    {
+                        lstSalesOrderSubItemByItem.remove(salesOrderSubItemByItemTemp);
+                        break;
+                    }
+                }
+            }
+            for (SalesOrderSubItemByItem salesOrderSubItemByItemTemp : lstSalesOrderSubItemByItem)
+            {
+                result = SalesOrderSubItemByItemBussiness.getInstance(mContext).Delete(salesOrderSubItemByItemTemp);
+                if(!result) break;
+            }
         }
         return result;
     }
