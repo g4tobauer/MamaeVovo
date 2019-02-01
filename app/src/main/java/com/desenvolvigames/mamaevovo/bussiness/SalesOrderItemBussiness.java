@@ -96,6 +96,9 @@ public class SalesOrderItemBussiness {
             }
             for(SubItem subItemTemp : lstSubItemTemp)
             {
+                salesOrderSubItemByItem = new SalesOrderSubItemByItem();
+                salesOrderSubItemByItem.IdSalesOrder = salesOrderItem.IdSalesOrder;
+                salesOrderSubItemByItem.IdSalesOrderItem = salesOrderItem.Id;
                 salesOrderSubItemByItem.IdSubItem = subItemTemp.Id;
                 salesOrderSubItemByItem = SalesOrderSubItemByItemBussiness.getInstance(mContext).Insert(salesOrderSubItemByItem);
                 if(salesOrderSubItemByItem == null) return false;
@@ -122,6 +125,15 @@ public class SalesOrderItemBussiness {
     }
 
     public boolean Delete(SalesOrderItem salesOrderItem){
+        SalesOrderSubItemByItem salesOrderSubItemByItem = new SalesOrderSubItemByItem();
+        salesOrderSubItemByItem.IdSalesOrder = salesOrderItem.IdSalesOrder;
+        salesOrderSubItemByItem.IdSalesOrderItem = salesOrderItem.Id;
+        List<SalesOrderSubItemByItem> lstSalesOrderSubItemByItem = SalesOrderSubItemByItemBussiness.getInstance(mContext).Get(salesOrderSubItemByItem);
+        for(SalesOrderSubItemByItem salesOrderSubItemByItemDel : lstSalesOrderSubItemByItem)
+        {
+            if(!SalesOrderSubItemByItemBussiness.getInstance(mContext).Delete(salesOrderSubItemByItemDel))
+                return false;
+        }
         return SalesOrderItemDataAccess.getInstance(mContext).Delete(salesOrderItem);
     }
 }
