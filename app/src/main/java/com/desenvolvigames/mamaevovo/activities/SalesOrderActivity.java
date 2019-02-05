@@ -31,18 +31,19 @@ public class SalesOrderActivity extends ListActivity implements View.OnClickList
     public static final String INSERT = "INSERT";
     public static final String UPDATE = "UPDATE";
 
+    public static final int REQUESTCODEINSERT = 1;
+    public static final int REQUESTCODEUPDATE = 2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_salesorder);
-        lstSalesOrderItem = new ArrayList<>();
-        InitFields();
         ltvSalesOrderItem = getListView();
         ltvSalesOrderItem.setChoiceMode(ltvSalesOrderItem.CHOICE_MODE_SINGLE);
         ltvSalesOrderItem.setTextFilterEnabled(true);
         ltvSalesOrderItem.setOnItemLongClickListener(SalesOrderActivity.this);
+        InitFields();
         setListAdapter(new ArrayAdapter<>(SalesOrderActivity.this, android.R.layout.simple_list_item_1, lstSalesOrderItem));
-
         salesOrderItemAdd = findViewById(R.id.fab_salesorder_item_add);
         salesOrderItemAdd.setOnClickListener(SalesOrderActivity.this);
     }
@@ -52,8 +53,8 @@ public class SalesOrderActivity extends ListActivity implements View.OnClickList
         salesOrderItemOldTemp = (SalesOrderItem)parent.getItemAtPosition(position);
         Intent myIntent = new Intent(SalesOrderActivity.this, SalesOrderItemActivity.class);
         myIntent.putExtra("key", salesOrderItemOldTemp);
-        myIntent.setAction(UPDATE);
-        SalesOrderActivity.this.startActivityForResult(myIntent, 2);
+        myIntent.setAction(SalesOrderItemActivity.UPDATE);
+        SalesOrderActivity.this.startActivityForResult(myIntent, REQUESTCODEUPDATE);
     }
 
     @Override
@@ -64,11 +65,11 @@ public class SalesOrderActivity extends ListActivity implements View.OnClickList
             SalesOrderItem salesOrderItem;
             switch (requestCode)
             {
-                case 1:
+                case REQUESTCODEINSERT:
                     salesOrderItem = data.getParcelableExtra("result");
                     lstSalesOrderItem.add(salesOrderItem);
                     break;
-                case 2:
+                case REQUESTCODEUPDATE:
                     salesOrderItem = data.getParcelableExtra("result");
                     lstSalesOrderItem.set(lstSalesOrderItem.indexOf(salesOrderItemOldTemp), salesOrderItem);
                     salesOrderItemOldTemp = null;
@@ -85,8 +86,8 @@ public class SalesOrderActivity extends ListActivity implements View.OnClickList
     @Override
     public void onClick(View v){
         Intent myIntent = new Intent(SalesOrderActivity.this, SalesOrderItemActivity.class);
-        myIntent.setAction(INSERT);
-        SalesOrderActivity.this.startActivityForResult(myIntent, 1);
+        myIntent.setAction(SalesOrderItemActivity.INSERT);
+        SalesOrderActivity.this.startActivityForResult(myIntent, REQUESTCODEINSERT);
     }
 
     @Override
@@ -179,6 +180,7 @@ public class SalesOrderActivity extends ListActivity implements View.OnClickList
     }
 
     private void InitFields() {
+        lstSalesOrderItem = new ArrayList<>();
         switch(getIntent().getAction())
         {
             case INSERT:

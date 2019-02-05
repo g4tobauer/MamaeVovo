@@ -35,11 +35,13 @@ public class SalesOrderItemActivity extends ListActivity implements View.OnClick
     private ArrayList<SubItem> lstSubItems;
     private SalesOrderItem salesOrderItem;
 
+    public static final String INSERT = "INSERT";
+    public static final String UPDATE = "UPDATE";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_salesorderitem);
-
         lstMenuCheck = getListView();
         lstMenuCheck.setChoiceMode(lstMenuCheck.CHOICE_MODE_MULTIPLE);
         lstMenuCheck.setTextFilterEnabled(true);
@@ -100,6 +102,12 @@ public class SalesOrderItemActivity extends ListActivity implements View.OnClick
         InputConditions();
     }
 
+    @Override
+    public void onBackPressed() {
+        setResult(Activity.RESULT_CANCELED, getIntent());
+        finish();
+    }
+
     private void InputConditions(){
         AlertDialog.Builder builder = new AlertDialog.Builder(SalesOrderItemActivity.this);
         // Set up the input
@@ -145,19 +153,11 @@ public class SalesOrderItemActivity extends ListActivity implements View.OnClick
         alertToShow.show();
     }
 
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = getIntent();
-        setResult(Activity.RESULT_CANCELED, intent);
-        finish();
-    }
-
     private void ManageAction(){
         Intent intent = getIntent();
         switch(intent.getAction())
         {
-            case "UPDATE":
+            case UPDATE:
                 salesOrderItem = intent.getParcelableExtra("key");
                 ProductSpinnerAdapter adapter = ((ProductSpinnerAdapter)spnSalesOrderitemProducts.getAdapter());
                 for(Product product : adapter.getProducts())
