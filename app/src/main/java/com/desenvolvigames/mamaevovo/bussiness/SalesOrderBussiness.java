@@ -108,7 +108,11 @@ public class SalesOrderBussiness {
 
     public boolean Delete(SalesOrder salesOrder){
         boolean result = true;
-        for(SalesOrderItem salesOrderItemTemp : salesOrder.SalesOrderItem)
+
+        SalesOrder salesOrderTemp = new SalesOrder();
+        salesOrderTemp.Id = salesOrder.Id;
+        salesOrderTemp = Get(salesOrderTemp).get(0);
+        for(SalesOrderItem salesOrderItemTemp : salesOrderTemp.SalesOrderItem)
         {
             result = SalesOrderItemBussiness.getInstance(mContext).Delete(salesOrderItemTemp);
         }
