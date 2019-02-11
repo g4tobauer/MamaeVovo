@@ -38,4 +38,9 @@ public final class Contracts {
         public static final String COLUMN_NAME_IDSALESORDERITEM = "IdSalesOrderItem";
         public static final String COLUMN_NAME_IDSUBITEM = "IdSubItem";
     }
+
+    public static class MovementDateEntry implements BaseColumns {
+        public static final String TABLE_NAME = "MovementDate";
+        public static final String COLUMN_NAME_DATE = "Date";
+    }
 }
