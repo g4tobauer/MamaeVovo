@@ -1,5 +1,6 @@
 package com.desenvolvigames.mamaevovo.dataAccess;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -67,13 +68,56 @@ public class MovementDateDataAccess {
 
         return mArrayList;
     }
+
     public MovementDate Insert(MovementDate movementDate){
-        return null;
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        if(movementDate.Date != null)
+            values.put(Contracts.MovementDateEntry.COLUMN_NAME_DATE, DateHelper.convertDateToString(movementDate.Date));
+
+        long newRowId = db.insert(Contracts.MovementDateEntry.TABLE_NAME, null, values);
+        db.close();
+
+        MovementDate result = null;
+        if(!(newRowId < 0))
+        {
+            result = new MovementDate();
+            result.Id = newRowId;
+            result = Get(result).get(0);
+        }
+        return result;
     }
+
     public boolean Update(MovementDate movementDate){
-        return false;
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        if(movementDate.Date != null)
+            values.put(Contracts.MovementDateEntry.COLUMN_NAME_DATE, DateHelper.convertDateToString(movementDate.Date));
+
+        String selection = Contracts.MovementDateEntry._ID + " = ?";
+        String[] selectionArgs = { movementDate.Id.toString() };
+        int count = db.update(
+                Contracts.MovementDateEntry.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs);
+        db.close();
+        return (!(count == 0));
     }
+
     public boolean Delete(MovementDate movementDate){
-        return false;
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        String[] selectionArgs = new String[1];
+        String selection = null;
+        if(!(movementDate.Id == null))
+        {
+            selection = Contracts.MovementDateEntry._ID + " = ?";
+            selectionArgs[0] = movementDate.Id.toString();
+        }
+        boolean result = db.delete(Contracts.MovementDateEntry.TABLE_NAME, selection, selectionArgs) > 0;
+        db.close();
+        return result;
     }
 }
