@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 
 public class SalesOrder implements Parcelable {
+    public static Long IDCURRENTDATE;
+
     public Long Id;
     public Long IdDate;
     public ArrayList<SalesOrderItem> SalesOrderItem;
@@ -39,6 +41,16 @@ public class SalesOrder implements Parcelable {
     };
 
     @Override
+    public String toString() {
+        StringBuilder sbResult = new StringBuilder();
+        double valorTotal = 0;
+        for(SalesOrderItem salesOrderItem : SalesOrderItem)
+            valorTotal += salesOrderItem.Quantidade * salesOrderItem.Product.Price;
+        sbResult.append(valorTotal);
+        return sbResult.toString();
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }
@@ -58,15 +70,5 @@ public class SalesOrder implements Parcelable {
             dest.writeLong(IdDate);
         }
         dest.writeTypedList(SalesOrderItem);
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sbResult = new StringBuilder();
-        double valorTotal = 0;
-        for(SalesOrderItem salesOrderItem : SalesOrderItem)
-            valorTotal += salesOrderItem.Quantidade * salesOrderItem.Product.Price;
-        sbResult.append(valorTotal);
-        return sbResult.toString();
     }
 }

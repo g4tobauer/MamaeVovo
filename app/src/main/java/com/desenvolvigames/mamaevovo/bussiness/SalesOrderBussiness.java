@@ -43,6 +43,7 @@ public class SalesOrderBussiness {
 
     public SalesOrder Insert(SalesOrder salesOrder){
         ArrayList<SalesOrderItem> salesOrderItem = salesOrder.SalesOrderItem;
+        salesOrder.IdDate = SalesOrder.IDCURRENTDATE;
         salesOrder = SalesOrderDataAccess.getInstance(mContext).Insert(salesOrder);
         salesOrder.SalesOrderItem = new ArrayList();
         for(SalesOrderItem salesOrderItemTemp : salesOrderItem)
@@ -55,6 +56,7 @@ public class SalesOrderBussiness {
 
     public boolean Update(SalesOrder salesOrder){
         boolean result;
+        salesOrder.IdDate = SalesOrder.IDCURRENTDATE;
         result = SalesOrderDataAccess.getInstance(mContext).Update(salesOrder);
         if(result)
         {

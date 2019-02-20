@@ -7,12 +7,15 @@ import android.view.View;
 import android.widget.Button;
 
 import com.desenvolvigames.mamaevovo.R;
+import com.desenvolvigames.mamaevovo.bussiness.MovementDateBussiness;
 import com.desenvolvigames.mamaevovo.bussiness.ProductBussiness;
 import com.desenvolvigames.mamaevovo.bussiness.SalesOrderBussiness;
 import com.desenvolvigames.mamaevovo.bussiness.SubItemBussiness;
+import com.desenvolvigames.mamaevovo.entities.MovementDate;
 import com.desenvolvigames.mamaevovo.entities.Product;
 import com.desenvolvigames.mamaevovo.entities.SalesOrder;
 import com.desenvolvigames.mamaevovo.entities.SubItem;
+import com.desenvolvigames.mamaevovo.helpers.DateHelper;
 
 import java.util.ArrayList;
 
@@ -32,6 +35,18 @@ public class PrincipalActivitty extends AppCompatActivity implements View.OnClic
         btnPrincipalCadastre.setOnClickListener(PrincipalActivitty.this);
         btnSalesOrder.setOnClickListener(PrincipalActivitty.this);
         btnSubItem.setOnClickListener(PrincipalActivitty.this);
+        Date();
+    }
+
+    private void Date() {
+        MovementDate movementDate = new MovementDate();
+        movementDate.Date = DateHelper.getCurrentDate();
+        ArrayList<MovementDate> lstMovementDate = MovementDateBussiness.getInstance(getBaseContext()).Get(movementDate);
+        if(!lstMovementDate.isEmpty())
+            movementDate = lstMovementDate.get(0);
+        else
+            movementDate = MovementDateBussiness.getInstance(getBaseContext()).Insert(movementDate);
+        SalesOrder.IDCURRENTDATE = movementDate.Id;
     }
 
     @Override

@@ -44,7 +44,7 @@ public class MovementDateDataAccess {
         {
             if(sbSelection.length() > 0) sbSelection.append(" AND ");
             sbSelection.append(Contracts.MovementDateEntry.COLUMN_NAME_DATE + " = ?");
-            arSelectionArgs.add(movementDate.Date.toString());
+            arSelectionArgs.add(DateHelper.convertDateToString(movementDate.Date));
         }
 
         String sortOrder = Contracts.MovementDateEntry._ID + " ASC";
@@ -54,7 +54,7 @@ public class MovementDateDataAccess {
                 Contracts.MovementDateEntry.COLUMN_NAME_DATE
         };
         String[] selectionArgs = arSelectionArgs.toArray(new String[0]);
-        Cursor cursor = db.query(Contracts.SubItemEntry.TABLE_NAME, projection, sbSelection.length() > 0 ? sbSelection.toString() : null, selectionArgs,null,null, sortOrder);
+        Cursor cursor = db.query(Contracts.MovementDateEntry.TABLE_NAME, projection, sbSelection.length() > 0 ? sbSelection.toString() : null, selectionArgs,null,null, sortOrder);
 
         ArrayList<MovementDate> mArrayList = new ArrayList();
         for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
@@ -87,24 +87,6 @@ public class MovementDateDataAccess {
             result = Get(result).get(0);
         }
         return result;
-    }
-
-    public boolean Update(MovementDate movementDate){
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        if(movementDate.Date != null)
-            values.put(Contracts.MovementDateEntry.COLUMN_NAME_DATE, DateHelper.convertDateToString(movementDate.Date));
-
-        String selection = Contracts.MovementDateEntry._ID + " = ?";
-        String[] selectionArgs = { movementDate.Id.toString() };
-        int count = db.update(
-                Contracts.MovementDateEntry.TABLE_NAME,
-                values,
-                selection,
-                selectionArgs);
-        db.close();
-        return (!(count == 0));
     }
 
     public boolean Delete(MovementDate movementDate){

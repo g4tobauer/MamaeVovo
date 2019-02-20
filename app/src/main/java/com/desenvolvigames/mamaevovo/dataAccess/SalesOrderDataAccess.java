@@ -42,7 +42,8 @@ public class SalesOrderDataAccess {
         String sortOrder = Contracts.SalesOrderEntry._ID + " ASC";
 
         String[] projection = {
-                Contracts.SalesOrderEntry._ID
+                Contracts.SalesOrderEntry._ID,
+                Contracts.SalesOrderEntry.COLUMN_NAME_IDDATE
         };
         String[] selectionArgs = arSelectionArgs.toArray(new String[0]);
         Cursor cursor = db.query(Contracts.SalesOrderEntry.TABLE_NAME, projection, sbSelection.length() > 0 ? sbSelection.toString() : null, selectionArgs,null,null, sortOrder);
@@ -52,6 +53,7 @@ public class SalesOrderDataAccess {
             // The Cursor is now set to the right position
             SalesOrder newProd = new SalesOrder();
             newProd.Id = cursor.getLong(cursor.getColumnIndexOrThrow(Contracts.SalesOrderEntry._ID));
+            newProd.IdDate = cursor.getLong(cursor.getColumnIndexOrThrow(Contracts.SalesOrderEntry.COLUMN_NAME_IDDATE));
             mArrayList.add(newProd);
         }
         db.close();
