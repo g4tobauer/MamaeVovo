@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import java.util.Date;
 
 public class MovementDate implements Parcelable {
+    public static Long IDCURRENTDATE;
 
     public Long Id;
     public Date Date;

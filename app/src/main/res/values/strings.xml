@@ -8,6 +8,7 @@
     <string name="principal_cadastre_salesorder">Pedidos</string>
     <string name="principal_cadastre_product">Produtos</string>
     <string name="principal_cadastre_subitem">SubItens</string>
+    <string name="principal_cadastre_reports">Relatórios</string>
 
     <string name="product_title">Cadastro de Produtos</string>
     <string name="product_description">Descrição</string>

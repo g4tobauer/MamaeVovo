@@ -24,6 +24,7 @@ public class PrincipalActivitty extends AppCompatActivity implements View.OnClic
     private Button btnPrincipalCadastre;
     private Button btnSalesOrder;
     private Button btnSubItem;
+    private Button btnReports;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +33,11 @@ public class PrincipalActivitty extends AppCompatActivity implements View.OnClic
         btnPrincipalCadastre = findViewById(R.id.btn_principal_product);
         btnSalesOrder = findViewById(R.id.btn_principal_salesorder);
         btnSubItem = findViewById(R.id.btn_principal_subitem);
+        btnReports = findViewById(R.id.btn_principal_reports);
         btnPrincipalCadastre.setOnClickListener(PrincipalActivitty.this);
         btnSalesOrder.setOnClickListener(PrincipalActivitty.this);
         btnSubItem.setOnClickListener(PrincipalActivitty.this);
+        btnReports.setOnClickListener(PrincipalActivitty.this);
         Date();
     }
 
@@ -46,7 +49,7 @@ public class PrincipalActivitty extends AppCompatActivity implements View.OnClic
             movementDate = lstMovementDate.get(0);
         else
             movementDate = MovementDateBussiness.getInstance(getBaseContext()).Insert(movementDate);
-        SalesOrder.IDCURRENTDATE = movementDate.Id;
+        MovementDate.IDCURRENTDATE = movementDate.Id;
     }
 
     @Override
@@ -68,8 +71,9 @@ public class PrincipalActivitty extends AppCompatActivity implements View.OnClic
                 }
                 break;
             case R.id.btn_principal_salesorder:
-
-                ArrayList<SalesOrder> lstSalesOrder = SalesOrderBussiness.getInstance(getBaseContext()).Get(new SalesOrder());
+                SalesOrder currentDateSalesOrder = new SalesOrder();
+                currentDateSalesOrder.IdDate = MovementDate.IDCURRENTDATE;
+                ArrayList<SalesOrder> lstSalesOrder = SalesOrderBussiness.getInstance(getBaseContext()).Get(currentDateSalesOrder);
                 if(lstSalesOrder.isEmpty()) {
                     myIntent = new Intent(PrincipalActivitty.this, SalesOrderActivity.class);
                     myIntent.setAction(ProductActivity.INSERT);
@@ -93,6 +97,11 @@ public class PrincipalActivitty extends AppCompatActivity implements View.OnClic
                     myIntent.putParcelableArrayListExtra("key", lstSubItem);
                     PrincipalActivitty.this.startActivity(myIntent);
                 }
+                break;
+
+            case R.id.btn_principal_reports:
+                myIntent = new Intent(PrincipalActivitty.this, ReportsActivity.class);
+                PrincipalActivitty.this.startActivity(myIntent);
                 break;
         }
         finish();

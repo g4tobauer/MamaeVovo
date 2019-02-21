@@ -6,7 +6,6 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 
 public class SalesOrder implements Parcelable {
-    public static Long IDCURRENTDATE;
 
     public Long Id;
     public Long IdDate;

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.desenvolvigames.mamaevovo.dataAccess.SalesOrderDataAccess;
 import com.desenvolvigames.mamaevovo.dataAccess.SalesOrderItemDataAccess;
+import com.desenvolvigames.mamaevovo.entities.MovementDate;
 import com.desenvolvigames.mamaevovo.entities.SalesOrder;
 import com.desenvolvigames.mamaevovo.entities.SalesOrderItem;
 
@@ -43,7 +44,7 @@ public class SalesOrderBussiness {
 
     public SalesOrder Insert(SalesOrder salesOrder){
         ArrayList<SalesOrderItem> salesOrderItem = salesOrder.SalesOrderItem;
-        salesOrder.IdDate = SalesOrder.IDCURRENTDATE;
+        salesOrder.IdDate = MovementDate.IDCURRENTDATE;
         salesOrder = SalesOrderDataAccess.getInstance(mContext).Insert(salesOrder);
         salesOrder.SalesOrderItem = new ArrayList();
         for(SalesOrderItem salesOrderItemTemp : salesOrderItem)
@@ -56,7 +57,7 @@ public class SalesOrderBussiness {
 
     public boolean Update(SalesOrder salesOrder){
         boolean result;
-        salesOrder.IdDate = SalesOrder.IDCURRENTDATE;
+        salesOrder.IdDate = MovementDate.IDCURRENTDATE;
         result = SalesOrderDataAccess.getInstance(mContext).Update(salesOrder);
         if(result)
         {

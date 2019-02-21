@@ -25,6 +25,11 @@ tools:context=".activities.PrincipalActivitty">
             android:id="@+id/btn_principal_subitem"
             style="@style/DefaultButton"
             android:text="@string/principal_cadastre_subitem"/>
+
+        <Button
+            android:id="@+id/btn_principal_reports"
+            style="@style/DefaultButton"
+            android:text="@string/principal_cadastre_reports"/>
     </LinearLayout>
 
 </android.support.v7.widget.LinearLayoutCompat>
