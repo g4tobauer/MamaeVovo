@@ -1,71 +1,38 @@
 package com.desenvolvigames.mamaevovo.activities;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.DatePicker;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.desenvolvigames.mamaevovo.R;
+import com.desenvolvigames.mamaevovo.bussiness.MovementDateBussiness;
+import com.desenvolvigames.mamaevovo.entities.MovementDate;
+import com.desenvolvigames.mamaevovo.helpers.DateHelper;
+import com.desenvolvigames.mamaevovo.helpers.Filters.MovementDateFilter;
 
-import java.util.Calendar;
+public class ReportsActivity extends AppCompatActivity implements View.OnClickListener {
 
-public class ReportsActivity extends AppCompatActivity {
-    private DatePicker datePicker;
-    private Calendar calendar;
-    private TextView dateView;
-    private int year, month, day;
+    EditText edtDias;
+    Button btnCreate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reports);
-
-        dateView = (TextView) findViewById(R.id.textView3);
-        calendar = Calendar.getInstance();
-        year = calendar.get(Calendar.YEAR);
-
-        month = calendar.get(Calendar.MONTH);
-        day = calendar.get(Calendar.DAY_OF_MONTH);
-        showDate(year, month+1, day);
-    }
-
-    @SuppressWarnings("deprecation")
-    public void setDate(View view) {
-        showDialog(999);
-        Toast.makeText(getApplicationContext(), "ca",
-                Toast.LENGTH_SHORT)
-                .show();
+        edtDias = findViewById(R.id.edt_report_dias);
+        btnCreate = findViewById(R.id.btn_report_create);
+        btnCreate.setOnClickListener(ReportsActivity.this);
     }
 
     @Override
-    protected Dialog onCreateDialog(int id) {
-        // TODO Auto-generated method stub
-        if (id == 999) {
-            return new DatePickerDialog(this,
-                    myDateListener, year, month, day);
+    public void onClick(View v) {
+        switch(v.getId())
+        {
+            case R.id.btn_report_create:
+                MovementDateBussiness.getInstance(getBaseContext()).Get(new MovementDateFilter(MovementDateFilter.INTERVALDATEBYDAYS, DateHelper.getCurrentDate(), -1));
+                break;
         }
-        return null;
-    }
-
-    private DatePickerDialog.OnDateSetListener myDateListener = new
-            DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker arg0,
-                                      int arg1, int arg2, int arg3) {
-                    // TODO Auto-generated method stub
-                    // arg1 = year
-                    // arg2 = month
-                    // arg3 = day
-                    showDate(arg1, arg2+1, arg3);
-                }
-            };
-
-    private void showDate(int year, int month, int day) {
-        dateView.setText(new StringBuilder().append(day).append("/")
-                .append(month).append("/").append(year));
     }
 }

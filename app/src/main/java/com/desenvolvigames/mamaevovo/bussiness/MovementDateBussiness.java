@@ -3,6 +3,8 @@ package com.desenvolvigames.mamaevovo.bussiness;
 import android.content.Context;
 import com.desenvolvigames.mamaevovo.dataAccess.MovementDateDataAccess;
 import com.desenvolvigames.mamaevovo.entities.MovementDate;
+import com.desenvolvigames.mamaevovo.helpers.DateHelper;
+import com.desenvolvigames.mamaevovo.helpers.Filters.MovementDateFilter;
 
 import java.util.ArrayList;
 
@@ -25,8 +27,9 @@ public class MovementDateBussiness {
         mContext = context;
     }
 
-    public ArrayList<MovementDate> Get(MovementDate movementDate){
-        return MovementDateDataAccess.getInstance(mContext).Get(movementDate);
+    public ArrayList<MovementDate> Get(MovementDateFilter movementDateFilter){
+        movementDateFilter.InitialDate = DateHelper.addDaysToDate(movementDateFilter.FinalDate, movementDateFilter.BaseDateDays);
+        return MovementDateDataAccess.getInstance(mContext).Get(movementDateFilter);
     }
 
     public MovementDate Insert(MovementDate movementDate){

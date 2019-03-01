@@ -9,6 +9,7 @@ import com.desenvolvigames.mamaevovo.dataAccess.management.Contracts;
 import com.desenvolvigames.mamaevovo.dataAccess.management.DbHelper;
 import com.desenvolvigames.mamaevovo.entities.MovementDate;
 import com.desenvolvigames.mamaevovo.helpers.DateHelper;
+import com.desenvolvigames.mamaevovo.helpers.Filters.MovementDateFilter;
 
 import java.util.ArrayList;
 
@@ -30,21 +31,26 @@ public class MovementDateDataAccess {
         mDbHelper = new DbHelper(context);
     }
 
-    public ArrayList<MovementDate> Get(MovementDate movementDate){
+    public ArrayList<MovementDate> Get(MovementDateFilter movementDateFilter){
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
         StringBuilder sbSelection = new StringBuilder();
         ArrayList<String> arSelectionArgs = new ArrayList<>();
 
-        if(!(movementDate.Id == null))
-        {
-            sbSelection.append(Contracts.MovementDateEntry._ID + " = ?");
-            arSelectionArgs.add(movementDate.Id.toString());
-        }
-        if(!(movementDate.Date == null))
-        {
-            if(sbSelection.length() > 0) sbSelection.append(" AND ");
-            sbSelection.append(Contracts.MovementDateEntry.COLUMN_NAME_DATE + " = ?");
-            arSelectionArgs.add(DateHelper.convertDateToString(movementDate.Date));
+        if(movementDateFilter.IntervalDateType == MovementDateFilter.INTERVALDATEBYID) {
+            if (!(movementDateFilter.Id == null)) {
+                sbSelection.append(Contracts.MovementDateEntry._ID + " = ?");
+                arSelectionArgs.add(movementDateFilter.Id.toString());
+            }
+        }else
+        if(movementDateFilter.IntervalDateType == MovementDateFilter.INTERVALDATEBYDAYS) {
+            if (!(movementDateFilter.InitialDate == null || movementDateFilter.FinalDate == null)) {
+//            if(sbSelection.length() > 0) sbSelection.append(" AND ");
+                sbSelection.append(Contracts.MovementDateEntry.COLUMN_NAME_DATE + " >= ?");
+                arSelectionArgs.add(DateHelper.convertDateToString(movementDateFilter.InitialDate));
+                sbSelection.append(" AND ");
+                sbSelection.append(Contracts.MovementDateEntry.COLUMN_NAME_DATE + " <= ?");
+                arSelectionArgs.add(DateHelper.convertDateToString(movementDateFilter.FinalDate));
+            }
         }
 
         String sortOrder = Contracts.MovementDateEntry._ID + " ASC";
@@ -82,9 +88,10 @@ public class MovementDateDataAccess {
         MovementDate result = null;
         if(!(newRowId < 0))
         {
-            result = new MovementDate();
-            result.Id = newRowId;
-            result = Get(result).get(0);
+            MovementDateFilter filter = new MovementDateFilter();
+            filter.IntervalDateType = MovementDateFilter.INTERVALDATEBYID;
+            filter.Id = newRowId;
+            result = Get(filter).get(0);
         }
         return result;
     }

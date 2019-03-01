@@ -16,6 +16,7 @@ import com.desenvolvigames.mamaevovo.entities.Product;
 import com.desenvolvigames.mamaevovo.entities.SalesOrder;
 import com.desenvolvigames.mamaevovo.entities.SubItem;
 import com.desenvolvigames.mamaevovo.helpers.DateHelper;
+import com.desenvolvigames.mamaevovo.helpers.Filters.MovementDateFilter;
 
 import java.util.ArrayList;
 
@@ -44,7 +45,7 @@ public class PrincipalActivitty extends AppCompatActivity implements View.OnClic
     private void Date() {
         MovementDate movementDate = new MovementDate();
         movementDate.Date = DateHelper.getCurrentDate();
-        ArrayList<MovementDate> lstMovementDate = MovementDateBussiness.getInstance(getBaseContext()).Get(movementDate);
+        ArrayList<MovementDate> lstMovementDate = MovementDateBussiness.getInstance(getBaseContext()).Get(new MovementDateFilter(MovementDateFilter.INTERVALDATEBYDAYS, movementDate.Date, 0));
         if(!lstMovementDate.isEmpty())
             movementDate = lstMovementDate.get(0);
         else

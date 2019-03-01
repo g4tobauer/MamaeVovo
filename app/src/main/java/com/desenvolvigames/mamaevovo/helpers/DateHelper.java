@@ -26,4 +26,12 @@ public class DateHelper {
     public static Date getCurrentDate() {
         return convertStringToDate(convertDateToString(Calendar.getInstance().getTime()));
     }
+
+    public static Date addDaysToDate(Date date, int days)
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, days);
+        return calendar.getTime();
+    }
 }
